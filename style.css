@@ -2467,7 +2467,9 @@ footer {
 }
 
 /* Category Group Styles */
-
+.contact-subtitle {
+  margin-bottom: 48px;
+}
 
 
 /* ==========================================================================
@@ -2731,7 +2733,7 @@ footer {
   }
   #contact > div {
     grid-template-columns: 1fr !important;
-    gap: 40px !important;
+    gap: 16px !important;
     text-align: center !important;
   }
   #contact h2 {
@@ -2740,6 +2742,9 @@ footer {
   #contact p {
     margin-left: auto !important;
     margin-right: auto !important;
+  }
+  .contact-subtitle {
+    margin-bottom: 16px !important;
   }
   #contact > div > div:first-child > div {
     justify-content: center !important;

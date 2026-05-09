@@ -92,7 +92,7 @@ const App = () => {
         scrollTrigger: {
           trigger: gallerySection,
           start: 'top top',
-          end: `+=${galleryCards.length * 150}%`,
+          end: () => window.innerWidth <= 768 ? `+=${galleryCards.length * 50}%` : `+=${galleryCards.length * 150}%`,
           pin: true,
           scrub: true,
           refreshPriority: -1,
@@ -957,7 +957,7 @@ const App = () => {
           <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr', gap: '80px', alignItems: 'center', position: 'relative', zIndex: 1 }}>
             <div style={{ position: 'relative' }}>
               <h2>Siap untuk Memulai<span className="font-handwriting">Transformasi?</span></h2>
-              <p style={{ fontSize: '1.4rem', color: 'var(--text-muted)', marginBottom: '48px', maxWidth: '600px' }}>Kami siap membantu Anda membangun life skills yang diperlukan untuk menghadapi tantangan masa depan.</p>
+              <p className="contact-subtitle" style={{ fontSize: '1.4rem', color: 'var(--text-muted)', maxWidth: '600px' }}>Kami siap membantu Anda membangun life skills yang diperlukan untuk menghadapi tantangan masa depan.</p>
               <div className="desktop-wa-btn" style={{ display: 'flex', gap: '24px' }}>
                 <a href="https://wa.me/6287877198886" target="_blank" rel="noopener noreferrer" className="btn btn-blue btn-lg btn-whatsapp-shake">
                   <Icon icon="mdi:whatsapp" fontSize="1.5rem" />
@@ -985,7 +985,7 @@ const App = () => {
             <div className="mobile-wa-btn" style={{ display: 'none', gap: '24px', justifyContent: 'center' }}>
               <a href="https://wa.me/6287877198886" target="_blank" rel="noopener noreferrer" className="btn btn-blue btn-lg btn-whatsapp-shake">
                 <Icon icon="mdi:whatsapp" fontSize="1.5rem" />
-                Hubungi Via WhatsApp
+                Hubungi via WhatsApp
               </a>
             </div>
           </div>
