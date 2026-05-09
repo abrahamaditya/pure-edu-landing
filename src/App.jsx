@@ -94,7 +94,6 @@ const App = () => {
           start: 'top top',
           end: `+=${galleryCards.length * 150}%`,
           pin: true,
-          pinType: "transform",
           scrub: true,
           refreshPriority: -1,
           onEnter: () => {
@@ -959,10 +958,10 @@ const App = () => {
             <div style={{ position: 'relative' }}>
               <h2>Siap untuk Memulai<span className="font-handwriting">Transformasi?</span></h2>
               <p style={{ fontSize: '1.4rem', color: 'var(--text-muted)', marginBottom: '48px', maxWidth: '600px' }}>Kami siap membantu Anda membangun life skills yang diperlukan untuk menghadapi tantangan masa depan.</p>
-              <div style={{ display: 'flex', gap: '24px' }}>
+              <div className="desktop-wa-btn" style={{ display: 'flex', gap: '24px' }}>
                 <a href="https://wa.me/6287877198886" target="_blank" rel="noopener noreferrer" className="btn btn-blue btn-lg btn-whatsapp-shake">
                   <Icon icon="mdi:whatsapp" fontSize="1.5rem" />
-                  Hubungi Via WhatsApp
+                  Hubungi via WhatsApp
                 </a>
               </div>
             </div>
@@ -981,6 +980,13 @@ const App = () => {
                 <p className="contact-label" style={{ color: '#94A3B8', fontSize: '0.9rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 800, marginBottom: '8px' }}>Email</p>
                 <p className="contact-value" style={{ fontSize: '1.2rem', fontWeight: 700, color: '#0F172A' }}>info@pure-tco.com</p>
               </div>
+            </div>
+            
+            <div className="mobile-wa-btn" style={{ display: 'none', gap: '24px', justifyContent: 'center' }}>
+              <a href="https://wa.me/6287877198886" target="_blank" rel="noopener noreferrer" className="btn btn-blue btn-lg btn-whatsapp-shake">
+                <Icon icon="mdi:whatsapp" fontSize="1.5rem" />
+                Hubungi Via WhatsApp
+              </a>
             </div>
           </div>
         </section>

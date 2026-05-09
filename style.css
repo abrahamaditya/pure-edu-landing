@@ -2582,7 +2582,7 @@ footer {
     margin: 0 auto !important;
   }
   .floating-card-compact {
-    transform: scale(0.7) !important;
+    scale: 0.7 !important;
   }
 
   /* Stats Section */
@@ -2746,6 +2746,14 @@ footer {
   }
   .contact-card-premium {
     padding: 32px !important;
+  }
+
+  .desktop-wa-btn {
+    display: none !important;
+  }
+  
+  .mobile-wa-btn {
+    display: flex !important;
   }
 
   /* Footer */
