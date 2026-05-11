@@ -412,18 +412,18 @@ const App = () => {
           <img src="/assets/logo/logo-pure-edu.png" alt="Pure Education Logo" className="logo-main" style={{ height: '55px' }} />
         </a>
         <ul className="nav-links">
-          <li><a href="#about">Tentang</a></li>
-          <li><a href="#services">Layanan</a></li>
-          <li><a href="#program">Program</a></li>
-          <li><a href="#classes">Metode</a></li>
-          <li><a href="#contact">Kontak</a></li>
+          <li><a href="#about" aria-label="Navigasi ke bagian Tentang Kami">Tentang</a></li>
+          <li><a href="#services" aria-label="Navigasi ke bagian Layanan Kami">Layanan</a></li>
+          <li><a href="#program" aria-label="Navigasi ke bagian Program M.O.T.I.O.N">Program</a></li>
+          <li><a href="#classes" aria-label="Navigasi ke bagian Metode Pembelajaran">Metode</a></li>
+          <li><a href="#contact" aria-label="Navigasi ke bagian Kontak Kami">Kontak</a></li>
         </ul>
         <div className="nav-actions">
-          <a href="#contact" className="btn btn-blue">Hubungi Kami</a>
+          <a href="#contact" className="btn btn-blue" aria-label="Hubungi PURE Education sekarang">Hubungi Kami</a>
         </div>
       </nav>
 
-      <div className="scroll-container">
+      <main className="scroll-container" role="main">
 
         {/* Compact Premium Hero Section */}
         <section id="home" className="hero-compact">
@@ -438,14 +438,14 @@ const App = () => {
               </p>
 
               <div className="cta-row-compact">
-                <a href="#contact" className="btn btn-blue">Mulai Sekarang</a>
+                <a href="#contact" className="btn btn-blue" aria-label="Mulai program PURE Education sekarang">Mulai Sekarang</a>
                 <div className="social-divider"></div>
                 <div className="social-group-compact">
-                  <a href="https://www.instagram.com/pureedu.tco/" target="_blank" rel="noopener noreferrer" className="hero-social-circle instagram-btn">
+                  <a href="https://www.instagram.com/pureedu.tco/" target="_blank" rel="noopener noreferrer" className="hero-social-circle instagram-btn" aria-label="Kunjungi Instagram PURE Education">
                     <div className="social-icon-wrapper"><Icon icon="mdi:instagram" /></div>
                     <span className="social-expand-text">Lihat Program Terbaru</span>
                   </a>
-                  <a href="https://linktr.ee/pure_tco" target="_blank" rel="noopener noreferrer" className="hero-social-circle linktree-btn">
+                  <a href="https://linktr.ee/pure_tco" target="_blank" rel="noopener noreferrer" className="hero-social-circle linktree-btn" aria-label="Kunjungi Linktree PURE Education">
                     <div className="social-icon-wrapper"><Icon icon="simple-icons:linktree" /></div>
                     <span className="social-expand-text">Akses Semua Informasi</span>
                   </a>
@@ -490,7 +490,7 @@ const App = () => {
         </section>
 
         {/* Impact Stats */}
-        <section className="stats-section">
+        <section id="stats" className="stats-section" aria-label="Statistik Dampak PURE Education">
           <div className="stats-container">
             {[
               { value: 10000, suffix: '+', label: 'Siswa dilatih', comma: true },
@@ -514,7 +514,7 @@ const App = () => {
           </div>
         </section>
 
-        <section className="clients-section">
+        <section id="clients" className="clients-section" aria-label="Mitra Strategis PURE Education">
           <div className="clients-container">
             <span className="clients-label font-handwriting" style={{ textTransform: 'none', lineHeight: '1' }}>
               <span style={{ color: 'var(--primary-dark)', fontSize: '1.8rem', paddingLeft: '10px' }}>Mitra Strategis Kami</span><br />
@@ -532,7 +532,7 @@ const App = () => {
                     'logo-penabur.png', 'logo-lpt-ui.png'
                   ].map((logo, i) => (
                     <div key={i} className="client-logo">
-                      <img src={`/assets/logo/${logo}`} alt="Client Logo" />
+                      <img src={`/assets/logo/${logo}`} alt={logo.replace('logo-', '').replace('.png', '').split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ') + ' — Mitra PURE Education'} />
                     </div>
                   ))}
                 </div>
@@ -546,7 +546,7 @@ const App = () => {
                     'logo-penabur.png', 'logo-lpt-ui.png'
                   ].map((logo, i) => (
                     <div key={`dup-${i}`} className="client-logo">
-                      <img src={`/assets/logo/${logo}`} alt="Client Logo" />
+                      <img src={`/assets/logo/${logo}`} alt={logo.replace('logo-', '').replace('.png', '').split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ') + ' — Mitra PURE Education'} />
                     </div>
                   ))}
                 </div>
@@ -592,7 +592,7 @@ const App = () => {
               </div>
             </div>
             <div>
-              <h2 className="section-title">Tentang<span className="font-handwriting">Kami</span></h2>
+              <h2 className="section-title">Tentang<span className="font-handwriting">Kami</span><span style={{position: 'absolute', width: '1px', height: '1px', overflow: 'hidden', clip: 'rect(0,0,0,0)'}}> — Partner Edukasi Life Skills Terpercaya</span></h2>
               <p style={{ fontSize: '1rem', color: '#64748B', marginBottom: '20px', lineHeight: 1.5 }}>
                 Sejak 2010, <strong>PURE Education</strong> melampaui batas pembelajaran tradisional untuk memaksimalkan potensi unik setiap individu. Solusi inovatif hadir bagi siswa, guru, hingga orang tua melalui sesi luring dan daring yang dirancang secara personal.
               </p>
@@ -633,11 +633,225 @@ const App = () => {
           </div>
         </section>
 
+        {/* 3 Pillars Section */}
+        <style dangerouslySetInnerHTML={{__html: `
+          .pillar-card {
+            position: relative;
+            overflow: hidden;
+            background: rgba(255, 255, 255, 0.03) !important;
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.05) !important;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: 32px !important;
+          }
+          .pillar-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            border-radius: 32px;
+            padding: 2px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.2), rgba(255,255,255,0));
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            opacity: 0.5;
+            transition: opacity 0.5s ease;
+            pointer-events: none;
+          }
+          .pillar-card:hover {
+            transform: translateY(-12px) scale(1.02);
+            background: rgba(255, 255, 255, 0.08) !important;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+          }
+          .pillar-card:hover::before {
+            opacity: 1;
+            background: linear-gradient(135deg, var(--hover-color), rgba(255,255,255,0));
+          }
+          .pillar-card-teacher { --hover-color: #EA6319; }
+          .pillar-card-student { --hover-color: #3B82F6; }
+          .pillar-card-parents { --hover-color: #488765; }
+
+          .pillar-content-front {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+          }
+          .pillar-icon-box {
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+          }
+          .pillar-card:hover .pillar-icon-box {
+            transform: scale(1.15) rotate(8deg);
+            box-shadow: 0 20px 40px var(--glow-color);
+          }
+          .pillar-tag {
+            padding: 8px 16px;
+            background: var(--tag-bg);
+            border: 1px solid var(--tag-border);
+            border-radius: 100px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--tag-color);
+            transition: all 0.3s ease;
+          }
+          .pillar-tag:hover {
+            transform: translateY(-2px);
+            background: var(--tag-bg-hover);
+          }
+          .pillar-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+          }
+          @media (max-width: 992px) {
+            .pillar-grid {
+              grid-template-columns: 1fr;
+              gap: 30px;
+            }
+          }
+        `}} />
+        <section id="pillars" className="features-section" aria-label="3 Pilar Utama PURE Education" style={{
+          position: 'relative',
+          backgroundImage: 'url(/assets/background-school.webp)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundAttachment: 'fixed',
+          padding: '140px 0',
+          color: 'white',
+          overflow: 'hidden'
+        }}>
+          {/* Dark overlay */}
+          <div style={{
+            position: 'absolute',
+            top: 0, left: 0, right: 0, bottom: 0,
+            background: 'linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(15, 23, 42, 0.75) 100%)',
+            zIndex: 1
+          }}></div>
+          
+          {/* Abstract glowing blobs for premium aesthetic */}
+          <div style={{ position: 'absolute', top: '0%', left: '10%', width: '600px', height: '600px', background: 'radial-gradient(circle, rgba(234, 99, 25, 0.15) 0%, transparent 70%)', borderRadius: '50%', zIndex: 1, pointerEvents: 'none' }}></div>
+          <div style={{ position: 'absolute', bottom: '-10%', right: '5%', width: '700px', height: '700px', background: 'radial-gradient(circle, rgba(59, 130, 246, 0.15) 0%, transparent 70%)', borderRadius: '50%', zIndex: 1, pointerEvents: 'none' }}></div>
+          <div style={{ position: 'absolute', top: '40%', left: '40%', width: '500px', height: '500px', background: 'radial-gradient(circle, rgba(72, 135, 101, 0.1) 0%, transparent 70%)', borderRadius: '50%', zIndex: 1, pointerEvents: 'none' }}></div>
+
+          <div style={{ position: 'relative', zIndex: 2, maxWidth: '1200px', margin: '0 auto', padding: '0 20px' }}>
+            <div style={{ textAlign: 'center', marginBottom: '80px' }}>
+              <div style={{ display: 'inline-flex', alignItems: 'center', gap: '10px', padding: '8px 24px', background: 'rgba(255,255,255,0.05)', borderRadius: '100px', border: '1px solid rgba(255,255,255,0.1)', marginBottom: '24px', backdropFilter: 'blur(10px)' }}>
+                <Icon icon="solar:star-fall-bold-duotone" color="#EA6319" />
+                <span style={{ fontSize: '0.9rem', fontWeight: 700, letterSpacing: '1px', textTransform: 'uppercase', color: '#CBD5E1' }}>Ekosistem Holistik</span>
+              </div>
+              <h2 style={{ fontSize: '3.5rem', fontWeight: 900, marginBottom: '24px', color: 'white', lineHeight: 1.1 }}>
+                <span style={{ background: 'linear-gradient(to right, #FFFFFF, #94A3B8)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>3 Pilar</span> <span className="font-handwriting" style={{ color: '#EA6319', fontSize: '4.5rem', display: 'inline-block', transform: 'rotate(-2deg) translateY(5px)' }}>Utama</span>
+              </h2>
+              <p style={{ fontSize: '1.4rem', color: 'rgba(255,255,255,0.8)', maxWidth: '750px', margin: '0 auto', fontStyle: 'italic', fontWeight: 400, letterSpacing: '0.5px' }}>
+                "Growing student, empowering teachers, partnering parents."
+              </p>
+            </div>
+
+            <div className="pillar-grid">
+              {/* Teacher */}
+              <div className="pillar-card pillar-card-teacher" style={{ padding: '50px 40px' }}>
+                <div className="pillar-content-front">
+                  <div className="pillar-icon-box" style={{ '--glow-color': 'rgba(234, 99, 25, 0.4)', width: '72px', height: '72px', background: 'linear-gradient(135deg, #EA6319, #FF8C4B)', borderRadius: '20px', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '32px', fontSize: '36px', boxShadow: '0 10px 25px rgba(234, 99, 25, 0.3)' }}>
+                    <Icon icon="solar:user-id-bold-duotone" color="white" />
+                  </div>
+                  <h3 style={{ fontSize: '2.2rem', fontWeight: 800, marginBottom: '8px', color: 'white', letterSpacing: '-0.5px' }}>Teacher</h3>
+                  <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: '1rem', marginBottom: '32px', fontWeight: 500 }}>Empowering educators to inspire.</p>
+                  
+                  <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '28px' }}>
+                    <div>
+                      <div style={{ color: 'white', fontWeight: 700, fontSize: '1.2rem', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '10px' }}>
+                        <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#EA6319', boxShadow: '0 0 10px #EA6319' }}></div>
+                        Workshop
+                      </div>
+                      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px', '--tag-bg': 'rgba(234,99,25,0.1)', '--tag-bg-hover': 'rgba(234,99,25,0.2)', '--tag-border': 'rgba(234,99,25,0.2)', '--tag-color': '#FFB085' }}>
+                        <span className="pillar-tag">Creative Teaching</span>
+                        <span className="pillar-tag">Stress Management</span>
+                        <span className="pillar-tag">Student Engagement</span>
+                        <span className="pillar-tag">Behavior</span>
+                      </div>
+                    </div>
+                    <div>
+                      <div style={{ color: 'white', fontWeight: 700, fontSize: '1.2rem', display: 'flex', alignItems: 'center', gap: '10px' }}>
+                        <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#EA6319', boxShadow: '0 0 10px #EA6319' }}></div>
+                        Team Building
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Student */}
+              <div className="pillar-card pillar-card-student" style={{ padding: '50px 40px' }}>
+                <div className="pillar-content-front">
+                  <div className="pillar-icon-box" style={{ '--glow-color': 'rgba(59, 130, 246, 0.4)', width: '72px', height: '72px', background: 'linear-gradient(135deg, #3B82F6, #60A5FA)', borderRadius: '20px', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '32px', fontSize: '36px', boxShadow: '0 10px 25px rgba(59, 130, 246, 0.3)' }}>
+                    <Icon icon="solar:users-group-two-rounded-bold-duotone" color="white" />
+                  </div>
+                  <h3 style={{ fontSize: '2.2rem', fontWeight: 800, marginBottom: '8px', color: 'white', letterSpacing: '-0.5px' }}>Student</h3>
+                  <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: '1rem', marginBottom: '32px', fontWeight: 500 }}>Growing potential, shaping character.</p>
+                  
+                  <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '28px' }}>
+                    <div>
+                      <div style={{ color: 'white', fontWeight: 700, fontSize: '1.2rem', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '10px' }}>
+                        <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#3B82F6', boxShadow: '0 0 10px #3B82F6' }}></div>
+                        PURE Motion
+                      </div>
+                      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px', '--tag-bg': 'rgba(59,130,246,0.1)', '--tag-bg-hover': 'rgba(59,130,246,0.2)', '--tag-border': 'rgba(59,130,246,0.2)', '--tag-color': '#93C5FD' }}>
+                        <span className="pillar-tag">Head to Toe Program</span>
+                      </div>
+                    </div>
+                    <div>
+                      <div style={{ color: 'white', fontWeight: 700, fontSize: '1.2rem', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '10px' }}>
+                        <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#3B82F6', boxShadow: '0 0 10px #3B82F6' }}></div>
+                        School Program
+                      </div>
+                      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px', '--tag-bg': 'rgba(59,130,246,0.1)', '--tag-bg-hover': 'rgba(59,130,246,0.2)', '--tag-border': 'rgba(59,130,246,0.2)', '--tag-color': '#93C5FD' }}>
+                        <span className="pillar-tag">Character Camp</span>
+                        <span className="pillar-tag">Motivational Day</span>
+                        <span className="pillar-tag">Leadership Camp</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Parents */}
+              <div className="pillar-card pillar-card-parents" style={{ padding: '50px 40px' }}>
+                <div className="pillar-content-front">
+                  <div className="pillar-icon-box" style={{ '--glow-color': 'rgba(72, 135, 101, 0.4)', width: '72px', height: '72px', background: 'linear-gradient(135deg, #488765, #6BC093)', borderRadius: '20px', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '32px', fontSize: '36px', boxShadow: '0 10px 25px rgba(72, 135, 101, 0.3)' }}>
+                    <Icon icon="solar:home-smile-bold-duotone" color="white" />
+                  </div>
+                  <h3 style={{ fontSize: '2.2rem', fontWeight: 800, marginBottom: '8px', color: 'white', letterSpacing: '-0.5px' }}>Parents</h3>
+                  <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: '1rem', marginBottom: '32px', fontWeight: 500 }}>Partnering for a better future.</p>
+                  
+                  <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '28px' }}>
+                    <div>
+                      <div style={{ color: 'white', fontWeight: 700, fontSize: '1.2rem', display: 'flex', alignItems: 'center', gap: '10px' }}>
+                        <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#488765', boxShadow: '0 0 10px #488765' }}></div>
+                        Parenting Class
+                      </div>
+                    </div>
+                    <div>
+                      <div style={{ color: 'white', fontWeight: 700, fontSize: '1.2rem', display: 'flex', alignItems: 'center', gap: '10px' }}>
+                        <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#488765', boxShadow: '0 0 10px #488765' }}></div>
+                        Parents Community
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </section>
+
         {/* Layanan */}
         <section id="services" className="features-section services-section-orange">
           <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
             <div className="section-header">
-              <h2>Layanan<span className="font-handwriting" style={{ color: '#FFFFFF', opacity: 1, marginLeft: '10px' }}>Kami</span></h2>
+              <h2>Layanan<span className="font-handwriting" style={{ color: '#FFFFFF', opacity: 1, marginLeft: '10px' }}>Kami</span><span style={{position: 'absolute', width: '1px', height: '1px', overflow: 'hidden', clip: 'rect(0,0,0,0)'}}> untuk Siswa, Guru, dan Orang Tua</span></h2>
               <p style={{ maxWidth: '600px', margin: '0 auto', fontSize: '1.1rem' }}>Kami menyediakan berbagai pilar pengembangan untuk ekosistem pendidikan yang holistik.</p>
             </div>
             <div className="modern-alternating-services">
@@ -931,7 +1145,7 @@ const App = () => {
 
 
         {/* Gallery Section with Fan Stacking Effect */}
-        <section id="gallery" className="gallery-section">
+        <section id="gallery" className="gallery-section" aria-label="Galeri Momen Transformasi PURE Education">
           <div className="gallery-header">
             <h2>Momen<span className="font-handwriting" style={{ color: '#FFFFFF' }}>Transformasi</span></h2>
             <p style={{ color: '#FFFFFF', fontSize: '1.2rem', opacity: 0.9 }}>Melihat lebih dekat proses pertumbuhan para peserta program kami.</p>
@@ -946,7 +1160,7 @@ const App = () => {
               { img: '/assets/image/section_7_1.webp' }
             ].map((item, i) => (
               <div key={i} className="gallery-card">
-                <img src={item.img} alt={`Gallery ${i}`} />
+                <img src={item.img} alt={`Momen transformasi peserta program PURE Education — Foto ${i + 1}`} />
               </div>
             ))}
           </div>
@@ -994,7 +1208,7 @@ const App = () => {
         <footer className="footer-main">
           <div className="footer-grid">
             <div className="footer-brand">
-              <img src="/assets/logo/logo-pure-edu-white.png" alt="Logo" className="footer-logo" />
+              <img src="/assets/logo/logo-pure-edu-white.png" alt="PURE Education — Partner Edukasi Life Skills" className="footer-logo" />
               <p className="footer-info">
                 Membangun life skills dan potensi holistik melalui pendekatan psikologi dan kreativitas untuk masa depan yang lebih baik.
               </p>
@@ -1031,7 +1245,7 @@ const App = () => {
             <p>&copy; 2026 PURE Education. Hak Cipta Dilindungi.</p>
           </div>
         </footer>
-      </div>
+      </main>
     </>
   );
 };

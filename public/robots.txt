@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://pure-tco.com/sitemap.xml
+
+# Block access to non-content directories
+Disallow: /node_modules/
+Disallow: /src/
+
+# Crawl-delay for polite crawling
+Crawl-delay: 1
