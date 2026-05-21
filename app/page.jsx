@@ -66,7 +66,507 @@ const App = () => {
       }
     });
 
-    // 3. (Removed simple reveal to ensure cards always render cleanly)
+    // 3. 3 Pillars Tagline Scroll Reveal
+    const taglineOrange = document.querySelector('.phrase-orange');
+    const taglineBlue = document.querySelector('.phrase-blue');
+    const taglineGreen = document.querySelector('.phrase-green');
+    const cardStudent = document.querySelector('.pillar-card-student');
+    const cardTeacher = document.querySelector('.pillar-card-teacher');
+    const cardParents = document.querySelector('.pillar-card-parents');
+    const pillarsSection = document.getElementById('pillars');
+
+    let mm;
+    if (pillarsSection && taglineOrange && taglineBlue && taglineGreen && cardStudent && cardTeacher && cardParents) {
+      mm = gsap.matchMedia();
+
+      mm.add("(min-width: 992px)", () => {
+        // Desktop: Pin section, animate phrase color and card hover zoom sequentially in turns
+        const taglineTl = gsap.timeline({
+          scrollTrigger: {
+            trigger: pillarsSection,
+            start: 'top top',
+            end: '+=200%',
+            pin: true,
+            scrub: 0.8,
+            anticipatePin: 1,
+            toggleClass: { targets: pillarsSection, className: "pillars-active" }
+          }
+        });
+
+        const glows = [
+          cardStudent.querySelector('.pillar-card-glow'),
+          cardTeacher.querySelector('.pillar-card-glow'),
+          cardParents.querySelector('.pillar-card-glow')
+        ];
+
+        // Set initial dormant states
+        gsap.set([taglineOrange, taglineBlue, taglineGreen], {
+          color: 'rgba(255, 255, 255, 0.8)',
+          textShadow: '0 0 0px rgba(0, 0, 0, 0)'
+        });
+        gsap.set([cardStudent, cardTeacher, cardParents], {
+          y: 0,
+          scale: 1
+        });
+        gsap.set(glows, {
+          opacity: 0
+        });
+        gsap.set([
+          cardStudent.querySelector('h3'),
+          cardTeacher.querySelector('h3'),
+          cardParents.querySelector('h3')
+        ], {
+          color: 'white'
+        });
+        gsap.set([
+          cardStudent.querySelector('.pillar-icon-box'),
+          cardTeacher.querySelector('.pillar-icon-box'),
+          cardParents.querySelector('.pillar-icon-box')
+        ], {
+          scale: 1,
+          rotate: 0,
+          
+        });
+
+        taglineTl
+          // ==============================
+          // 1. Student Active (phrase turns orange & card hovers)
+          // ==============================
+          .to(taglineOrange, {
+            color: '#FF5E00',
+            textShadow: '0 0 12px rgba(255, 94, 0, 0.85), 0 0 24px rgba(255, 94, 0, 0.45)',
+            duration: 0.6,
+            ease: 'power1.inOut'
+          })
+          .to(cardStudent, {
+            y: -15,
+            scale: 1.05,
+            duration: 0.6,
+            ease: 'power1.inOut'
+          }, '<')
+          .to(cardStudent.querySelector('h3'), {
+            color: '#FF5E00',
+            duration: 0.6,
+            ease: 'power1.inOut'
+          }, '<')
+          .to(cardStudent.querySelector('.pillar-card-glow'), {
+            opacity: 1,
+            duration: 0.6,
+            ease: 'power1.inOut'
+          }, '<')
+          .to(cardStudent.querySelector('.pillar-icon-box'), {
+            scale: 1.15,
+            rotate: 8,
+            
+            duration: 0.6,
+            ease: 'power1.inOut'
+          }, '<')
+          
+          .to({}, { duration: 0.6 }) // hold active state
+
+          // ==============================
+          // 2. Student Reverts & Teacher Active
+          // ==============================
+          .to(taglineOrange, {
+            color: 'rgba(255, 255, 255, 0.8)',
+            textShadow: '0 0 0px rgba(0, 0, 0, 0)',
+            duration: 0.6,
+            ease: 'power1.inOut'
+          })
+          .to(cardStudent, {
+            y: 0,
+            scale: 1,
+            duration: 0.6,
+            ease: 'power1.inOut'
+          }, '<')
+          .to(cardStudent.querySelector('h3'), {
+            color: 'white',
+            duration: 0.6,
+            ease: 'power1.inOut'
+          }, '<')
+          .to(cardStudent.querySelector('h3'), {
+            color: 'white',
+            duration: 0.6,
+            ease: 'power1.inOut'
+          }, '<')
+          .to(cardStudent.querySelector('.pillar-card-glow'), {
+            opacity: 0,
+            duration: 0.6,
+            ease: 'power1.inOut'
+          }, '<')
+          .to(cardStudent.querySelector('.pillar-icon-box'), {
+            scale: 1,
+            rotate: 0,
+            
+            duration: 0.6,
+            ease: 'power1.inOut'
+          }, '<')
+          
+          .to(taglineBlue, {
+            color: '#00F0FF',
+            textShadow: '0 0 12px rgba(0, 240, 255, 0.85), 0 0 24px rgba(0, 240, 255, 0.45)',
+            duration: 0.6,
+            ease: 'power1.inOut'
+          }, '<+=0.1')
+          .to(cardTeacher, {
+            y: -15,
+            scale: 1.05,
+            duration: 0.6,
+            ease: 'power1.inOut'
+          }, '<')
+          .to(cardTeacher.querySelector('h3'), {
+            color: '#00F0FF',
+            duration: 0.6,
+            ease: 'power1.inOut'
+          }, '<')
+          .to(cardTeacher.querySelector('.pillar-card-glow'), {
+            opacity: 1,
+            duration: 0.6,
+            ease: 'power1.inOut'
+          }, '<')
+          .to(cardTeacher.querySelector('.pillar-icon-box'), {
+            scale: 1.15,
+            rotate: 8,
+            
+            duration: 0.6,
+            ease: 'power1.inOut'
+          }, '<')
+
+          .to({}, { duration: 0.6 }) // hold active state
+
+          // ==============================
+          // 3. Teacher Reverts & Parents Active
+          // ==============================
+          .to(taglineBlue, {
+            color: 'rgba(255, 255, 255, 0.8)',
+            textShadow: '0 0 0px rgba(0, 0, 0, 0)',
+            duration: 0.6,
+            ease: 'power1.inOut'
+          })
+          .to(cardTeacher, {
+            y: 0,
+            scale: 1,
+            duration: 0.6,
+            ease: 'power1.inOut'
+          }, '<')
+          .to(cardTeacher.querySelector('h3'), {
+            color: 'white',
+            duration: 0.6,
+            ease: 'power1.inOut'
+          }, '<')
+          .to(cardTeacher.querySelector('h3'), {
+            color: 'white',
+            duration: 0.6,
+            ease: 'power1.inOut'
+          }, '<')
+          .to(cardTeacher.querySelector('.pillar-card-glow'), {
+            opacity: 0,
+            duration: 0.6,
+            ease: 'power1.inOut'
+          }, '<')
+          .to(cardTeacher.querySelector('.pillar-icon-box'), {
+            scale: 1,
+            rotate: 0,
+            
+            duration: 0.6,
+            ease: 'power1.inOut'
+          }, '<')
+
+          .to(taglineGreen, {
+            color: '#00FF66',
+            textShadow: '0 0 12px rgba(0, 255, 102, 0.85), 0 0 24px rgba(0, 255, 102, 0.45)',
+            duration: 0.6,
+            ease: 'power1.inOut'
+          }, '<+=0.1')
+          .to(cardParents, {
+            y: -15,
+            scale: 1.05,
+            duration: 0.6,
+            ease: 'power1.inOut'
+          }, '<')
+          .to(cardParents.querySelector('h3'), {
+            color: '#00FF66',
+            duration: 0.6,
+            ease: 'power1.inOut'
+          }, '<')
+          .to(cardParents.querySelector('.pillar-card-glow'), {
+            opacity: 1,
+            duration: 0.6,
+            ease: 'power1.inOut'
+          }, '<')
+          .to(cardParents.querySelector('.pillar-icon-box'), {
+            scale: 1.15,
+            rotate: 8,
+            
+            duration: 0.6,
+            ease: 'power1.inOut'
+          }, '<')
+
+          .to({}, { duration: 0.6 }) // hold active state
+
+          // ==============================
+          // 4. Parents Reverts on Exit
+          // ==============================
+          .to(taglineGreen, {
+            color: 'rgba(255, 255, 255, 0.8)',
+            textShadow: '0 0 0px rgba(0, 0, 0, 0)',
+            duration: 0.6,
+            ease: 'power1.inOut'
+          })
+          .to(cardParents, {
+            y: 0,
+            scale: 1,
+            duration: 0.6,
+            ease: 'power1.inOut'
+          }, '<')
+          .to(cardParents.querySelector('h3'), {
+            color: 'white',
+            duration: 0.6,
+            ease: 'power1.inOut'
+          }, '<')
+          .to(cardParents.querySelector('h3'), {
+            color: 'white',
+            duration: 0.6,
+            ease: 'power1.inOut'
+          }, '<')
+          .to(cardParents.querySelector('.pillar-card-glow'), {
+            opacity: 0,
+            duration: 0.6,
+            ease: 'power1.inOut'
+          }, '<')
+          .to(cardParents.querySelector('.pillar-icon-box'), {
+            scale: 1,
+            rotate: 0,
+            
+            duration: 0.6,
+            ease: 'power1.inOut'
+          }, '<');
+      });
+
+      mm.add("(max-width: 991px)", () => {
+        // Mobile/Tablet: No pinning, just clean scroll-trigger reveal in turns
+        const taglineTl = gsap.timeline({
+          scrollTrigger: {
+            trigger: pillarsSection,
+            start: 'top 70%',
+            end: 'bottom 30%',
+            scrub: 0.8,
+            toggleClass: { targets: pillarsSection, className: "pillars-active" }
+          }
+        });
+
+        const glows = [
+          cardStudent.querySelector('.pillar-card-glow'),
+          cardTeacher.querySelector('.pillar-card-glow'),
+          cardParents.querySelector('.pillar-card-glow')
+        ];
+
+        // Set initial dormant states
+        gsap.set([taglineOrange, taglineBlue, taglineGreen], {
+          color: 'rgba(255, 255, 255, 0.8)',
+          textShadow: '0 0 0px rgba(0, 0, 0, 0)'
+        });
+        gsap.set([cardStudent, cardTeacher, cardParents], {
+          y: 0,
+          scale: 1
+        });
+        gsap.set(glows, {
+          opacity: 0
+        });
+        gsap.set([
+          cardStudent.querySelector('h3'),
+          cardTeacher.querySelector('h3'),
+          cardParents.querySelector('h3')
+        ], {
+          color: 'white'
+        });
+        gsap.set([
+          cardStudent.querySelector('.pillar-icon-box'),
+          cardTeacher.querySelector('.pillar-icon-box'),
+          cardParents.querySelector('.pillar-icon-box')
+        ], {
+          scale: 1,
+          rotate: 0,
+          
+        });
+
+        taglineTl
+          // 1. Student active
+          .to(taglineOrange, {
+            color: '#FF5E00',
+            textShadow: '0 0 12px rgba(255, 94, 0, 0.85), 0 0 24px rgba(255, 94, 0, 0.45)',
+            duration: 0.6,
+            ease: 'power1.inOut'
+          })
+          .to(cardStudent, {
+            y: -10,
+            scale: 1.03,
+            duration: 0.6,
+            ease: 'power1.inOut'
+          }, '<')
+          .to(cardStudent.querySelector('h3'), {
+            color: '#FF5E00',
+            duration: 0.6,
+            ease: 'power1.inOut'
+          }, '<')
+          .to(cardStudent.querySelector('.pillar-card-glow'), {
+            opacity: 1,
+            duration: 0.6,
+            ease: 'power1.inOut'
+          }, '<')
+          .to(cardStudent.querySelector('.pillar-icon-box'), {
+            scale: 1.15,
+            rotate: 8,
+            
+            duration: 0.6,
+            ease: 'power1.inOut'
+          }, '<')
+
+          .to({}, { duration: 0.6 }) // hold active state
+
+          // 2. Student Reverts & Teacher Active
+          .to(taglineOrange, {
+            color: 'rgba(255, 255, 255, 0.8)',
+            textShadow: '0 0 0px rgba(0, 0, 0, 0)',
+            duration: 0.6,
+            ease: 'power1.inOut'
+          })
+          .to(cardStudent, {
+            y: 0,
+            scale: 1,
+            duration: 0.6,
+            ease: 'power1.inOut'
+          }, '<')
+          .to(cardStudent.querySelector('.pillar-card-glow'), {
+            opacity: 0,
+            duration: 0.6,
+            ease: 'power1.inOut'
+          }, '<')
+          .to(cardStudent.querySelector('.pillar-icon-box'), {
+            scale: 1,
+            rotate: 0,
+            
+            duration: 0.6,
+            ease: 'power1.inOut'
+          }, '<')
+
+          .to(taglineBlue, {
+            color: '#00F0FF',
+            textShadow: '0 0 12px rgba(0, 240, 255, 0.85), 0 0 24px rgba(0, 240, 255, 0.45)',
+            duration: 0.6,
+            ease: 'power1.inOut'
+          }, '<+=0.1')
+          .to(cardTeacher, {
+            y: -10,
+            scale: 1.03,
+            duration: 0.6,
+            ease: 'power1.inOut'
+          }, '<')
+          .to(cardTeacher.querySelector('h3'), {
+            color: '#00F0FF',
+            duration: 0.6,
+            ease: 'power1.inOut'
+          }, '<')
+          .to(cardTeacher.querySelector('.pillar-card-glow'), {
+            opacity: 1,
+            duration: 0.6,
+            ease: 'power1.inOut'
+          }, '<')
+          .to(cardTeacher.querySelector('.pillar-icon-box'), {
+            scale: 1.15,
+            rotate: 8,
+            
+            duration: 0.6,
+            ease: 'power1.inOut'
+          }, '<')
+
+          .to({}, { duration: 0.6 }) // hold active state
+
+          // 3. Teacher Reverts & Parents Active
+          .to(taglineBlue, {
+            color: 'rgba(255, 255, 255, 0.8)',
+            textShadow: '0 0 0px rgba(0, 0, 0, 0)',
+            duration: 0.6,
+            ease: 'power1.inOut'
+          })
+          .to(cardTeacher, {
+            y: 0,
+            scale: 1,
+            duration: 0.6,
+            ease: 'power1.inOut'
+          }, '<')
+          .to(cardTeacher.querySelector('.pillar-card-glow'), {
+            opacity: 0,
+            duration: 0.6,
+            ease: 'power1.inOut'
+          }, '<')
+          .to(cardTeacher.querySelector('.pillar-icon-box'), {
+            scale: 1,
+            rotate: 0,
+            
+            duration: 0.6,
+            ease: 'power1.inOut'
+          }, '<')
+
+          .to(taglineGreen, {
+            color: '#00FF66',
+            textShadow: '0 0 12px rgba(0, 255, 102, 0.85), 0 0 24px rgba(0, 255, 102, 0.45)',
+            duration: 0.6,
+            ease: 'power1.inOut'
+          }, '<+=0.1')
+          .to(cardParents, {
+            y: -10,
+            scale: 1.03,
+            duration: 0.6,
+            ease: 'power1.inOut'
+          }, '<')
+          .to(cardParents.querySelector('h3'), {
+            color: '#00FF66',
+            duration: 0.6,
+            ease: 'power1.inOut'
+          }, '<')
+          .to(cardParents.querySelector('.pillar-card-glow'), {
+            opacity: 1,
+            duration: 0.6,
+            ease: 'power1.inOut'
+          }, '<')
+          .to(cardParents.querySelector('.pillar-icon-box'), {
+            scale: 1.15,
+            rotate: 8,
+            
+            duration: 0.6,
+            ease: 'power1.inOut'
+          }, '<')
+
+          .to({}, { duration: 0.6 }) // hold active state
+
+          // Exit
+          .to(taglineGreen, {
+            color: 'rgba(255, 255, 255, 0.8)',
+            textShadow: '0 0 0px rgba(0, 0, 0, 0)',
+            duration: 0.6,
+            ease: 'power1.inOut'
+          })
+          .to(cardParents, {
+            y: 0,
+            scale: 1,
+            duration: 0.6,
+            ease: 'power1.inOut'
+          }, '<')
+          .to(cardParents.querySelector('.pillar-card-glow'), {
+            opacity: 0,
+            duration: 0.6,
+            ease: 'power1.inOut'
+          }, '<')
+          .to(cardParents.querySelector('.pillar-icon-box'), {
+            scale: 1,
+            rotate: 0,
+            
+            duration: 0.6,
+            ease: 'power1.inOut'
+          }, '<');
+      });
+    }
 
     // 4. Deco Icons Parallax
     const decoIcons = gsap.utils.toArray('.deco-icon');
@@ -191,21 +691,10 @@ const App = () => {
       }
     }
 
-    // 6. Program M.O.TI.O.N Pinning & Dynamic Card Highlighting
+    // 6. Program M.O.TI.O.N Dynamic Card Highlighting
     const programSection = document.getElementById('program');
     const stickyLeft = document.querySelector('.sticky-left-box');
     if (programSection && stickyLeft) {
-      if (window.innerWidth > 768) {
-        ScrollTrigger.create({
-          trigger: programSection,
-          start: 'top top',
-          end: 'bottom bottom',
-          pin: stickyLeft,
-          pinSpacing: false,
-          scrub: true
-        });
-      }
-
       // Dynamic Highlight for Cards (Immediate Hand-off)
       const stepCards = gsap.utils.toArray('.modern-step-card');
       stepCards.forEach((card) => {
@@ -402,6 +891,7 @@ const App = () => {
     return () => {
       lenis.destroy();
       gsap.ticker.remove(lenis.raf);
+      if (mm) mm.revert();
       ScrollTrigger.getAll().forEach(st => st.kill());
     };
   }, []);
@@ -433,10 +923,13 @@ const App = () => {
             <div className="compact-content">
               <h1 className="title-compact">
                 Your<DynamicWordCarousel /> <br />
-                <span className="text-gradient">Solution</span> Learning Partner
+                <span className="text-gradient">Education</span> Partner
               </h1>
               <p className="desc-compact">
-                Membangun life skills dan karakter unggul melalui solusi pembelajaran inovatif yang dirancang khusus untuk pertumbuhan maksimal.
+                <strong>Unlocking potential through meaningful learning experiences designed for growth.</strong>
+                <span style={{ display: 'block', marginTop: '12px', fontSize: '1rem', opacity: 0.85 }}>
+                  Kami percaya setiap individu memiliki potensi luar biasa—dan kami hadir membantu Anda menemukan kunci yang tepat untuk membukanya.
+                </span>
               </p>
 
               <div className="cta-row-compact">
@@ -464,26 +957,26 @@ const App = () => {
                 <div className="floating-card-compact card-top animate-float-1">
                   <div className="icon-box-mini"><Icon icon="solar:star-bold" /></div>
                   <div>
-                    <p className="f-title">Partner Edukasi</p>
-                    <p className="f-sub">Terpercaya</p>
+                    <p className="f-title">Experiential Learning</p>
+                    <p className="f-sub">Fun & Meaningful</p>
                   </div>
                 </div>
 
                 <div className="floating-card-compact card-mid animate-float-2">
-                  <div className="icon-box-mini bg-green"><Icon icon="solar:medal-ribbon-bold" /></div>
+                  <div className="icon-box-mini bg-green"><Icon icon="solar:heart-bold" /></div>
                   <div>
-                    <p className="f-title">Metode Inovatif</p>
-                    <p className="f-sub">Bersertifikat</p>
+                    <p className="f-title">Psychology-Based</p>
+                    <p className="f-sub">Interactive & Reflective</p>
                   </div>
                 </div>
 
                 <div className="floating-card-compact card-bottom animate-float-3">
                   <div className="icon-box-mini" style={{ background: 'var(--primary-dark)' }}>
-                    <Icon icon="solar:calendar-date-bold" />
+                    <Icon icon="solar:magic-stick-bold" />
                   </div>
                   <div>
-                    <p className="f-title">15+ Tahun</p>
-                    <p className="f-sub">Berdedikasi</p>
+                    <p className="f-title">Tailored Program</p>
+                    <p className="f-sub">Designed for Your Needs</p>
                   </div>
                 </div>
               </div>
@@ -495,10 +988,10 @@ const App = () => {
         <section id="stats" className="stats-section" aria-label="Statistik Dampak PURE Education">
           <div className="stats-container">
             {[
-              { value: 10000, suffix: '+', label: 'Siswa dilatih', comma: true },
-              { value: 500, suffix: '+', label: 'Guru Dilatih', comma: false },
-              { value: 250, suffix: '+', label: 'Proyek', comma: false },
-              { value: 100, suffix: '+', label: 'Institusi Bermitra', comma: false }
+              { value: 10000, suffix: '+', label: 'Siswa Bertumbuh', comma: true },
+              { value: 500, suffix: '+', label: 'Guru & Pendidik Terlibat', comma: false },
+              { value: 250, suffix: '+', label: 'Program Pembelajaran', comma: false },
+              { value: 70, suffix: '+', label: 'Institusi Bermitra', comma: false }
             ].map((stat, i) => (
               <React.Fragment key={i}>
                 <div className="stat-item">
@@ -519,8 +1012,8 @@ const App = () => {
         <section id="clients" className="clients-section" aria-label="Mitra Strategis PURE Education">
           <div className="clients-container">
             <span className="clients-label font-handwriting" style={{ textTransform: 'none', lineHeight: '1' }}>
-              <span style={{ color: 'var(--primary-dark)', fontSize: '1.8rem', paddingLeft: '10px' }}>Mitra Strategis Kami</span><br />
-              <span style={{ color: 'var(--brand-orange)', fontSize: '3rem' }}>Institusi Terkemuka:</span>
+              <span style={{ color: 'var(--primary-dark)', fontSize: '1.8rem', paddingLeft: '10px' }}>Partner Pembelajaran untuk</span><br />
+              <span style={{ color: 'var(--brand-orange)', fontSize: '3rem' }}>Berbagai Institusi:</span>
             </span>
             <div className="clients-marquee">
               <div className="clients-track">
@@ -570,7 +1063,7 @@ const App = () => {
                 height: '100%',
                 borderRadius: '32px',
                 overflow: 'hidden',
-                boxShadow: '0 20px 40px rgba(0,0,0,0.1)',
+                
                 zIndex: 1,
                 transform: 'rotate(8deg) scale(0.92)'
               }}>
@@ -596,19 +1089,19 @@ const App = () => {
             <div>
               <h2 className="section-title">Tentang<span className="font-handwriting">Kami</span><span style={{position: 'absolute', width: '1px', height: '1px', overflow: 'hidden', clip: 'rect(0,0,0,0)'}}> — Partner Edukasi Life Skills Terpercaya</span></h2>
               <p style={{ fontSize: '1rem', color: '#64748B', marginBottom: '20px', lineHeight: 1.5 }}>
-                Sejak 2010, <strong>PURE Education</strong> melampaui batas pembelajaran tradisional untuk memaksimalkan potensi unik setiap individu. Solusi inovatif hadir bagi siswa, guru, hingga orang tua melalui sesi luring dan daring yang dirancang secara personal.
+                Sejak 2010, <strong>PURE Education</strong> menghadirkan pengalaman belajar yang interaktif dan bermakna untuk membantu setiap individu mengenali, mengembangkan, dan membuka potensinya. Program kami dirancang secara personal bagi siswa, guru, hingga institusi melalui pendekatan psikologi dan experiential learning.
               </p>
 
               <div>
                 <h4 className="font-handwriting" style={{ fontSize: '1.8rem', marginBottom: '12px', textTransform: 'none', letterSpacing: 'normal', marginLeft: 0 }}>
-                  4 nilai prinsip kami:
+                  Prinsip yang kami percaya:
                 </h4>
                 <div className="values-grid">
                   {[
-                    { title: 'Psychological Focus', desc: 'Fokus asah potensi lewat pendekatan psikologi.', icon: 'solar:plain-2-bold-duotone', color: '#EA6319' },
-                    { title: 'Experience-Based', desc: 'Metode teruji hasil pengalaman nyata lapangan.', icon: 'solar:star-bold-duotone', color: '#488765' },
-                    { title: 'Continuous Growth', desc: 'Dibimbing terus buat hasil yang berkelanjutan.', icon: 'solar:graph-up-bold-duotone', color: '#3B82F6' },
-                    { title: 'Tailored Solution', desc: 'Solusi unik yang didesain sesuai kebutuhan.', icon: 'solar:magic-stick-bold-duotone', color: '#8B5CF6' }
+                    { title: 'Psychological Approach', desc: 'Memahami potensi melalui pendekatan psikologi.', icon: 'solar:plain-2-bold-duotone', color: '#EA6319' },
+                    { title: 'Experiential Learning', desc: 'Belajar melalui pengalaman yang aktif dan bermakna.', icon: 'solar:star-bold-duotone', color: '#488765' },
+                    { title: 'Continuous Growth', desc: 'Mendukung proses belajar dan perkembangan berkelanjutan.', icon: 'solar:graph-up-bold-duotone', color: '#3B82F6' },
+                    { title: 'Tailored Program', desc: 'Program yang dirancang sesuai kebutuhan setiap individu dan institusi.', icon: 'solar:magic-stick-bold-duotone', color: '#8B5CF6' }
                   ].map((v, i) => (
                     <div key={i} className="value-card-compact">
                       <div className="value-icon-box" style={{ background: `${v.color}15`, color: v.color }}>
@@ -620,11 +1113,7 @@ const App = () => {
                           fontSize: '0.8rem',
                           color: '#64748B',
                           lineHeight: 1.4,
-                          margin: 0,
-                          display: '-webkit-box',
-                          WebkitLineClamp: 2,
-                          WebkitBoxOrient: 'vertical',
-                          overflow: 'hidden'
+                          margin: 0
                         }}>{v.desc}</p>
                       </div>
                     </div>
@@ -640,40 +1129,78 @@ const App = () => {
           .pillar-card {
             position: relative;
             overflow: hidden;
-            background: rgba(255, 255, 255, 0.03) !important;
-            backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
-            border: 1px solid rgba(255, 255, 255, 0.05) !important;
+            background: rgba(15, 23, 42, 0.45) !important;
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.4s, box-shadow 0.4s;
             border-radius: 32px !important;
+            will-change: transform;
           }
+          /* Default border static - tipis & elegan */
           .pillar-card::before {
             content: '';
             position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
             border-radius: 32px;
             padding: 2px;
-            background: linear-gradient(135deg, rgba(255,255,255,0.2), rgba(255,255,255,0));
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.02));
             -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
             -webkit-mask-composite: xor;
             mask-composite: exclude;
-            opacity: 0.5;
-            transition: opacity 0.5s ease;
+            opacity: 0.8;
             pointer-events: none;
           }
-          .pillar-card:hover {
-            transform: translateY(-12px) scale(1.02);
-            background: rgba(255, 255, 255, 0.08) !important;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+          
+          /* Active Glow Layer - terakselerasi GPU */
+          .pillar-card-glow {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            border-radius: 32px;
+            opacity: 0;
+            pointer-events: none;
+            z-index: 0;
+            transition: opacity 0.4s ease;
+            will-change: opacity;
+            background: rgba(255, 255, 255, 0.02) !important;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
           }
-          .pillar-card:hover::before {
-            opacity: 1;
-            background: linear-gradient(135deg, var(--hover-color), rgba(255,255,255,0));
+          .pillar-card-glow::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            border-radius: 32px;
+            padding: 2px;
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
           }
-          .pillar-card-teacher { --hover-color: #EA6319; }
-          .pillar-card-student { --hover-color: #3B82F6; }
-          .pillar-card-parents { --hover-color: #488765; }
+
+          /* Border aktif statis untuk tiap pilar */
+          .pillar-card-student .pillar-card-glow::before {
+            background: linear-gradient(135deg, #EA6319, rgba(234, 99, 25, 0));
+          }
+          .pillar-card-teacher .pillar-card-glow::before {
+            background: linear-gradient(135deg, #3B82F6, rgba(59, 130, 246, 0));
+          }
+          .pillar-card-parents .pillar-card-glow::before {
+            background: linear-gradient(135deg, #488765, rgba(72, 135, 101, 0));
+          }
+
+          /* Hover manual untuk desktop static (hanya aktif saat tidak scroll) */
+          #pillars:not(.pillars-active) .pillar-card:hover {
+            transform: translateY(-12px) scale(1.02) !important;
+          }
+          #pillars:not(.pillars-active) .pillar-card:hover .pillar-card-glow {
+            opacity: 1 !important;
+          }
+
+          /* Nonaktifkan transisi CSS ketika GSAP sedang aktif */
+          #pillars.pillars-active .pillar-card,
+          #pillars.pillars-active .pillar-card::before,
+          #pillars.pillars-active .pillar-card-glow,
+          #pillars.pillars-active .pillar-icon-box {
+            transition: none !important;
+          }
 
           .pillar-content-front {
             position: relative;
@@ -683,11 +1210,12 @@ const App = () => {
             height: 100%;
           }
           .pillar-icon-box {
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s;
+            will-change: transform;
           }
-          .pillar-card:hover .pillar-icon-box {
-            transform: scale(1.15) rotate(8deg);
-            box-shadow: 0 20px 40px var(--glow-color);
+          #pillars:not(.pillars-active) .pillar-card:hover .pillar-icon-box {
+            transform: scale(1.15) rotate(8deg) !important;
+            box-shadow: 0 20px 40px var(--glow-color) !important;
           }
           .pillar-tag {
             padding: 8px 16px;
@@ -703,6 +1231,27 @@ const App = () => {
             transform: translateY(-2px);
             background: var(--tag-bg-hover);
           }
+          .reveal-phrase {
+            color: rgba(255, 255, 255, 0.8);
+            display: inline-block;
+            transition: transform 0.3s ease, text-shadow 0.3s ease, color 0.3s ease;
+          }
+          .phrase-orange {
+            --reveal-color: #FF5E00;
+          }
+          .phrase-blue {
+            --reveal-color: #00F0FF;
+          }
+          .phrase-green {
+            --reveal-color: #00FF66;
+          }
+          @media (max-width: 768px) {
+            .pillar-tagline {
+              font-size: 1.25rem !important;
+              line-height: 1.5 !important;
+            }
+          }
+
           .pillar-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -740,76 +1289,54 @@ const App = () => {
 
           <div style={{ position: 'relative', zIndex: 2, maxWidth: '1200px', margin: '0 auto', padding: '0 20px' }}>
             <div style={{ textAlign: 'center', marginBottom: '80px' }}>
-              <div style={{ display: 'inline-flex', alignItems: 'center', gap: '10px', padding: '8px 24px', background: 'rgba(255,255,255,0.05)', borderRadius: '100px', border: '1px solid rgba(255,255,255,0.1)', marginBottom: '24px', backdropFilter: 'blur(10px)' }}>
-                <Icon icon="solar:star-fall-bold-duotone" color="#EA6319" />
-                <span style={{ fontSize: '0.9rem', fontWeight: 700, letterSpacing: '1px', textTransform: 'uppercase', color: '#CBD5E1' }}>Ekosistem Holistik</span>
-              </div>
               <h2 style={{ fontSize: '3.5rem', fontWeight: 900, marginBottom: '24px', color: 'white', lineHeight: 1.1 }}>
-                <span style={{ background: 'linear-gradient(to right, #FFFFFF, #94A3B8)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>3 Pilar</span> <span className="font-handwriting" style={{ color: '#EA6319', fontSize: '4.5rem', display: 'inline-block', transform: 'rotate(-2deg) translateY(5px)' }}>Utama</span>
+                3 Pilar<span className="font-handwriting" style={{ color: '#EA6319', fontSize: '4.5rem', display: 'inline-block', transform: 'rotate(-2deg) translateY(5px)', marginLeft: '10px' }}>Utama</span>
               </h2>
-              <p style={{ fontSize: '1.4rem', color: 'rgba(255,255,255,0.8)', maxWidth: '750px', margin: '0 auto', fontStyle: 'italic', fontWeight: 400, letterSpacing: '0.5px' }}>
-                "Growing student, empowering teachers, partnering parents."
+              <p className="pillar-tagline" style={{ fontSize: '1.6rem', color: 'rgba(255,255,255,0.8)', maxWidth: '850px', margin: '0 auto', fontStyle: 'italic', fontWeight: 700, letterSpacing: '0.5px', lineHeight: 1.6 }}>
+                <span className="reveal-phrase phrase-orange">Growing student</span>,{' '}
+                <span className="reveal-phrase phrase-blue">empowering teachers</span>,{' '}
+                <span className="reveal-phrase phrase-green">partnering parents.</span>
               </p>
             </div>
 
             <div className="pillar-grid">
-              {/* Teacher */}
-              <div className="pillar-card pillar-card-teacher" style={{ padding: '50px 40px' }}>
-                <div className="pillar-content-front">
-                  <div className="pillar-icon-box" style={{ '--glow-color': 'rgba(234, 99, 25, 0.4)', width: '72px', height: '72px', background: 'linear-gradient(135deg, #EA6319, #FF8C4B)', borderRadius: '20px', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '32px', fontSize: '36px', boxShadow: '0 10px 25px rgba(234, 99, 25, 0.3)' }}>
-                    <Icon icon="solar:user-id-bold-duotone" color="white" />
-                  </div>
-                  <h3 style={{ fontSize: '2.2rem', fontWeight: 800, marginBottom: '8px', color: 'white', letterSpacing: '-0.5px' }}>Teacher</h3>
-                  <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: '1rem', marginBottom: '32px', fontWeight: 500 }}>Empowering educators to inspire.</p>
-                  
-                  <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '28px' }}>
-                    <div>
-                      <div style={{ color: 'white', fontWeight: 700, fontSize: '1.2rem', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '10px' }}>
-                        <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#EA6319', boxShadow: '0 0 10px #EA6319' }}></div>
-                        Workshop
-                      </div>
-                      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px', '--tag-bg': 'rgba(234,99,25,0.1)', '--tag-bg-hover': 'rgba(234,99,25,0.2)', '--tag-border': 'rgba(234,99,25,0.2)', '--tag-color': '#FFB085' }}>
-                        <span className="pillar-tag">Creative Teaching</span>
-                        <span className="pillar-tag">Stress Management</span>
-                        <span className="pillar-tag">Student Engagement</span>
-                        <span className="pillar-tag">Behavior</span>
-                      </div>
-                    </div>
-                    <div>
-                      <div style={{ color: 'white', fontWeight: 700, fontSize: '1.2rem', display: 'flex', alignItems: 'center', gap: '10px' }}>
-                        <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#EA6319', boxShadow: '0 0 10px #EA6319' }}></div>
-                        Team Building
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
               {/* Student */}
               <div className="pillar-card pillar-card-student" style={{ padding: '50px 40px' }}>
+                <div className="pillar-card-glow"></div>
                 <div className="pillar-content-front">
-                  <div className="pillar-icon-box" style={{ '--glow-color': 'rgba(59, 130, 246, 0.4)', width: '72px', height: '72px', background: 'linear-gradient(135deg, #3B82F6, #60A5FA)', borderRadius: '20px', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '32px', fontSize: '36px', boxShadow: '0 10px 25px rgba(59, 130, 246, 0.3)' }}>
+                  <div className="pillar-icon-box" style={{ '--glow-color': 'rgba(234, 99, 25, 0.4)', width: '72px', height: '72px', background: 'linear-gradient(135deg, #EA6319, #FF8C4B)', borderRadius: '20px', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '32px', fontSize: '36px', boxShadow: '0 10px 25px rgba(234, 99, 25, 0.3)' }}>
                     <Icon icon="solar:users-group-two-rounded-bold-duotone" color="white" />
                   </div>
                   <h3 style={{ fontSize: '2.2rem', fontWeight: 800, marginBottom: '8px', color: 'white', letterSpacing: '-0.5px' }}>Student</h3>
                   <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: '1rem', marginBottom: '32px', fontWeight: 500 }}>Growing potential, shaping character.</p>
                   
-                  <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '28px' }}>
+                  <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '32px' }}>
                     <div>
-                      <div style={{ color: 'white', fontWeight: 700, fontSize: '1.2rem', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '10px' }}>
-                        <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#3B82F6', boxShadow: '0 0 10px #3B82F6' }}></div>
+                      <div style={{ color: 'white', fontWeight: 700, fontSize: '1.25rem', marginBottom: '8px', display: 'flex', alignItems: 'center', gap: '10px' }}>
+                        <Icon icon="solar:dumbbells-bold-duotone" style={{ color: '#EA6319', fontSize: '24px' }} />
                         PURE Motion
                       </div>
-                      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px', '--tag-bg': 'rgba(59,130,246,0.1)', '--tag-bg-hover': 'rgba(59,130,246,0.2)', '--tag-border': 'rgba(59,130,246,0.2)', '--tag-color': '#93C5FD' }}>
+                      <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '0.9rem', marginBottom: '16px', lineHeight: '1.4', fontWeight: 400 }}>
+                        Aktivitas fisik terstruktur untuk motorik & kebugaran.
+                      </p>
+                      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px', '--tag-bg': 'rgba(234,99,25,0.1)', '--tag-bg-hover': 'rgba(234,99,25,0.2)', '--tag-border': 'rgba(234,99,25,0.2)', '--tag-color': '#FFB085' }}>
                         <span className="pillar-tag">Head to Toe Program</span>
+                        <span className="pillar-tag">Physical Dev</span>
+                        <span className="pillar-tag">Active Play</span>
                       </div>
                     </div>
+
+                    <div style={{ height: '1px', background: 'linear-gradient(90deg, rgba(255,255,255,0.08), rgba(255,255,255,0))' }}></div>
+
                     <div>
-                      <div style={{ color: 'white', fontWeight: 700, fontSize: '1.2rem', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '10px' }}>
-                        <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#3B82F6', boxShadow: '0 0 10px #3B82F6' }}></div>
+                      <div style={{ color: 'white', fontWeight: 700, fontSize: '1.25rem', marginBottom: '8px', display: 'flex', alignItems: 'center', gap: '10px' }}>
+                        <Icon icon="solar:diploma-bold-duotone" style={{ color: '#EA6319', fontSize: '24px' }} />
                         School Program
                       </div>
-                      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px', '--tag-bg': 'rgba(59,130,246,0.1)', '--tag-bg-hover': 'rgba(59,130,246,0.2)', '--tag-border': 'rgba(59,130,246,0.2)', '--tag-color': '#93C5FD' }}>
+                      <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '0.9rem', marginBottom: '16px', lineHeight: '1.4', fontWeight: 400 }}>
+                        Pembentukan karakter & kepemimpinan di sekolah.
+                      </p>
+                      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px', '--tag-bg': 'rgba(234,99,25,0.1)', '--tag-bg-hover': 'rgba(234,99,25,0.2)', '--tag-border': 'rgba(234,99,25,0.2)', '--tag-color': '#FFB085' }}>
                         <span className="pillar-tag">Character Camp</span>
                         <span className="pillar-tag">Motivational Day</span>
                         <span className="pillar-tag">Leadership Camp</span>
@@ -819,8 +1346,57 @@ const App = () => {
                 </div>
               </div>
 
+              {/* Teacher */}
+              <div className="pillar-card pillar-card-teacher" style={{ padding: '50px 40px' }}>
+                <div className="pillar-card-glow"></div>
+                <div className="pillar-content-front">
+                  <div className="pillar-icon-box" style={{ '--glow-color': 'rgba(59, 130, 246, 0.4)', width: '72px', height: '72px', background: 'linear-gradient(135deg, #3B82F6, #60A5FA)', borderRadius: '20px', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '32px', fontSize: '36px', boxShadow: '0 10px 25px rgba(59, 130, 246, 0.3)' }}>
+                    <Icon icon="solar:user-id-bold-duotone" color="white" />
+                  </div>
+                  <h3 style={{ fontSize: '2.2rem', fontWeight: 800, marginBottom: '8px', color: 'white', letterSpacing: '-0.5px' }}>Teacher</h3>
+                  <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: '1rem', marginBottom: '32px', fontWeight: 500 }}>Empowering educators to inspire.</p>
+                  
+                  <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '32px' }}>
+                    <div>
+                      <div style={{ color: 'white', fontWeight: 700, fontSize: '1.25rem', marginBottom: '8px', display: 'flex', alignItems: 'center', gap: '10px' }}>
+                        <Icon icon="solar:square-academic-cap-bold-duotone" style={{ color: '#3B82F6', fontSize: '24px' }} />
+                        Workshop
+                      </div>
+                      <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '0.9rem', marginBottom: '16px', lineHeight: '1.4', fontWeight: 400 }}>
+                        Peningkatan kompetensi pedagogik & manajemen kelas.
+                      </p>
+                      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px', '--tag-bg': 'rgba(59,130,246,0.1)', '--tag-bg-hover': 'rgba(59,130,246,0.2)', '--tag-border': 'rgba(59,130,246,0.2)', '--tag-color': '#93C5FD' }}>
+                        <span className="pillar-tag">Creative Teaching</span>
+                        <span className="pillar-tag">Stress Management</span>
+                        <span className="pillar-tag">Student Engagement</span>
+                        <span className="pillar-tag">Behavior</span>
+                      </div>
+                    </div>
+
+                    <div style={{ height: '1px', background: 'linear-gradient(90deg, rgba(255,255,255,0.08), rgba(255,255,255,0))' }}></div>
+
+                    <div>
+                      <div style={{ color: 'white', fontWeight: 700, fontSize: '1.25rem', marginBottom: '8px', display: 'flex', alignItems: 'center', gap: '10px' }}>
+                        <Icon icon="solar:users-group-rounded-bold-duotone" style={{ color: '#3B82F6', fontSize: '24px' }} />
+                        Team Building
+                      </div>
+                      <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '0.9rem', marginBottom: '16px', lineHeight: '1.4', fontWeight: 400 }}>
+                        Mempererat kolaborasi & sinergi antar pendidik.
+                      </p>
+                      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px', '--tag-bg': 'rgba(59,130,246,0.1)', '--tag-bg-hover': 'rgba(59,130,246,0.2)', '--tag-border': 'rgba(59,130,246,0.2)', '--tag-color': '#93C5FD' }}>
+                        <span className="pillar-tag">Synergy & Trust</span>
+                        <span className="pillar-tag">Communication Skill</span>
+                        <span className="pillar-tag">Collaboration</span>
+                        <span className="pillar-tag">Fun Dynamics</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
               {/* Parents */}
               <div className="pillar-card pillar-card-parents" style={{ padding: '50px 40px' }}>
+                <div className="pillar-card-glow"></div>
                 <div className="pillar-content-front">
                   <div className="pillar-icon-box" style={{ '--glow-color': 'rgba(72, 135, 101, 0.4)', width: '72px', height: '72px', background: 'linear-gradient(135deg, #488765, #6BC093)', borderRadius: '20px', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '32px', fontSize: '36px', boxShadow: '0 10px 25px rgba(72, 135, 101, 0.3)' }}>
                     <Icon icon="solar:home-smile-bold-duotone" color="white" />
@@ -828,17 +1404,38 @@ const App = () => {
                   <h3 style={{ fontSize: '2.2rem', fontWeight: 800, marginBottom: '8px', color: 'white', letterSpacing: '-0.5px' }}>Parents</h3>
                   <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: '1rem', marginBottom: '32px', fontWeight: 500 }}>Partnering for a better future.</p>
                   
-                  <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '28px' }}>
+                  <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '32px' }}>
                     <div>
-                      <div style={{ color: 'white', fontWeight: 700, fontSize: '1.2rem', display: 'flex', alignItems: 'center', gap: '10px' }}>
-                        <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#488765', boxShadow: '0 0 10px #488765' }}></div>
+                      <div style={{ color: 'white', fontWeight: 700, fontSize: '1.25rem', marginBottom: '8px', display: 'flex', alignItems: 'center', gap: '10px' }}>
+                        <Icon icon="solar:hearts-bold-duotone" style={{ color: '#488765', fontSize: '24px' }} />
                         Parenting Class
                       </div>
+                      <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '0.9rem', marginBottom: '16px', lineHeight: '1.4', fontWeight: 400 }}>
+                        Sesi edukasi psikologi anak & pola asuh modern.
+                      </p>
+                      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px', '--tag-bg': 'rgba(72,135,101,0.1)', '--tag-bg-hover': 'rgba(72,135,101,0.2)', '--tag-border': 'rgba(72,135,101,0.2)', '--tag-color': '#A2DAB9' }}>
+                        <span className="pillar-tag">Positive Parenting</span>
+                        <span className="pillar-tag">Child Psychology</span>
+                        <span className="pillar-tag">Emotion Regulation</span>
+                        <span className="pillar-tag">Active Listening</span>
+                      </div>
                     </div>
+
+                    <div style={{ height: '1px', background: 'linear-gradient(90deg, rgba(255,255,255,0.08), rgba(255,255,255,0))' }}></div>
+
                     <div>
-                      <div style={{ color: 'white', fontWeight: 700, fontSize: '1.2rem', display: 'flex', alignItems: 'center', gap: '10px' }}>
-                        <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#488765', boxShadow: '0 0 10px #488765' }}></div>
+                      <div style={{ color: 'white', fontWeight: 700, fontSize: '1.25rem', marginBottom: '8px', display: 'flex', alignItems: 'center', gap: '10px' }}>
+                        <Icon icon="solar:chat-square-like-bold-duotone" style={{ color: '#488765', fontSize: '24px' }} />
                         Parents Community
+                      </div>
+                      <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '0.9rem', marginBottom: '16px', lineHeight: '1.4', fontWeight: 400 }}>
+                        Wadah berbagi & diskusi untuk tumbuh bersama.
+                      </p>
+                      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px', '--tag-bg': 'rgba(72,135,101,0.1)', '--tag-bg-hover': 'rgba(72,135,101,0.2)', '--tag-border': 'rgba(72,135,101,0.2)', '--tag-color': '#A2DAB9' }}>
+                        <span className="pillar-tag">Sharing Session</span>
+                        <span className="pillar-tag">Family Discussion</span>
+                        <span className="pillar-tag">Expert Talk</span>
+                        <span className="pillar-tag">Support Group</span>
                       </div>
                     </div>
                   </div>
@@ -854,13 +1451,13 @@ const App = () => {
           <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
             <div className="section-header">
               <h2>Layanan<span className="font-handwriting" style={{ color: '#FFFFFF', opacity: 1, marginLeft: '10px' }}>Kami</span><span style={{position: 'absolute', width: '1px', height: '1px', overflow: 'hidden', clip: 'rect(0,0,0,0)'}}> untuk Siswa, Guru, dan Orang Tua</span></h2>
-              <p style={{ maxWidth: '600px', margin: '0 auto', fontSize: '1.1rem' }}>Kami menyediakan berbagai pilar pengembangan untuk ekosistem pendidikan yang holistik.</p>
+              <p style={{ maxWidth: '600px', margin: '0 auto', fontSize: '1.1rem' }}>Menghadirkan pengalaman belajar dan pengembangan untuk siswa, orang tua, dan sekolah dalam membangun ekosistem pendidikan yang bertumbuh bersama.</p>
             </div>
             <div className="modern-alternating-services">
               {[
-                { icon: 'fluent-emoji:light-bulb', title: 'Training & Coaching', desc: 'Program intensif pengembangan karakter, resiliensi, dan pola pikir generasi muda melalui pendekatan psikologi yang aplikatif.', img: '/assets/image/section_3_1.webp' },
-                { icon: 'fluent-emoji:books', title: 'Materi Edukasi', desc: 'Penyediaan kurikulum dan modul pembelajaran life skills yang relevan dengan kebutuhan anak di era digital.', img: '/assets/image/section_3_2.webp' },
-                { icon: 'fluent-emoji:school', title: 'Kemitraan Sekolah', desc: 'Kolaborasi strategis dengan institusi pendidikan untuk menciptakan ekosistem pendukung pertumbuhan anak yang maksimal.', img: '/assets/image/section_3_3.webp' }
+                { icon: 'fluent-emoji:light-bulb', title: 'Training & Character Development', desc: 'Program interaktif untuk mengembangkan karakter, self-awareness, leadership, resilience, dan keterampilan sosial melalui experiential learning dan pendekatan psikologi.', img: '/assets/image/section_3_1.webp' },
+                { icon: 'fluent-emoji:books', title: 'Learning Resources', desc: 'Penyediaan modul dan pengalaman pembelajaran yang relevan untuk mendukung perkembangan life skills, karakter, dan kesiapan menghadapi tantangan masa kini.', img: '/assets/image/section_3_2.webp' },
+                { icon: 'fluent-emoji:school', title: 'School Partnership', desc: 'Berkolaborasi bersama sekolah dan pendidik untuk menciptakan pengalaman belajar yang suportif, bermakna, dan sesuai dengan kebutuhan perkembangan peserta didik.', img: '/assets/image/section_3_3.webp' }
               ].map((service, i) => (
                 <div key={i} className={`service-row ${i % 2 === 1 ? 'row-reverse' : ''}`}>
                   <div className="service-row-image" style={{ backgroundImage: `url(${service.img})` }}></div>
@@ -886,11 +1483,11 @@ const App = () => {
         </section>
 
         {/* Program M.O.T.I.O.N (GSAP Pinning Layout) */}
-        <section id="program" className="features-section" style={{ background: '#FFFFFF', paddingTop: '40px' }}>
+        <section id="program" className="features-section allow-sticky" style={{ background: '#FFFFFF', paddingTop: '40px' }}>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1.5fr', gap: '80px', maxWidth: '1000px', margin: '0 auto' }}>
 
             {/* Left: Sticky Context */}
-            <div className="sticky-left-box" style={{ height: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+            <div className="sticky-left-box" style={{ position: 'sticky', top: 0, height: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', alignSelf: 'start' }}>
               <div style={{ textAlign: 'left', maxWidth: '420px', width: '100%' }}>
                 <h3 style={{ fontSize: '3.2rem', fontWeight: 900, marginTop: '16px', lineHeight: 1.1 }}>
                   Memahami<br /><span className="font-handwriting" style={{ marginLeft: 0 }}>Tantangan</span>
@@ -936,7 +1533,7 @@ const App = () => {
             {/* Main Goals Cards (Styled like Learning Methods / modern-service-card) */}
             <div className="goal-grid-j">
               <div className="goal-card-j">
-                <div className="modern-service-icon" style={{ background: 'rgba(255,255,255,0.1)', color: 'white', border: '2px solid white', margin: '0 auto 32px' }}>
+                <div className="modern-service-icon" style={{ background: 'rgba(255,255,255,0.25)', color: 'white', border: '1px solid rgba(255,255,255,0.5)', margin: '0 auto 32px' }}>
                   <Icon icon="solar:star-fall-bold-duotone" />
                 </div>
                 <h4>Potensi Holistik</h4>
@@ -944,7 +1541,7 @@ const App = () => {
               </div>
 
               <div className="goal-card-j">
-                <div className="modern-service-icon" style={{ background: 'rgba(255,255,255,0.1)', color: 'white', border: '2px solid white', margin: '0 auto 32px' }}>
+                <div className="modern-service-icon" style={{ background: 'rgba(255,255,255,0.25)', color: 'white', border: '1px solid rgba(255,255,255,0.5)', margin: '0 auto 32px' }}>
                   <Icon icon="solar:heart-pulse-bold-duotone" />
                 </div>
                 <h4>Pendekatan Psikologis</h4>
@@ -952,7 +1549,7 @@ const App = () => {
               </div>
 
               <div className="goal-card-j">
-                <div className="modern-service-icon" style={{ background: 'rgba(255,255,255,0.1)', color: 'white', border: '2px solid white', margin: '0 auto 32px' }}>
+                <div className="modern-service-icon" style={{ background: 'rgba(255,255,255,0.25)', color: 'white', border: '1px solid rgba(255,255,255,0.5)', margin: '0 auto 32px' }}>
                   <Icon icon="solar:medal-star-bold-duotone" />
                 </div>
                 <h4>Manusia yang Utuh</h4>
@@ -983,9 +1580,16 @@ const App = () => {
 
                   <div className="journey-section minimal-item" data-part="ear">
                     <div className="min-dot"></div>
-                    <div className="min-card-content">
-                      <h3 className="min-organ-name">Ear</h3>
-                      <h4 className="min-meaning">Mendengarkan dengan Empati</h4>
+                    <div className="min-card-content" style={{ '--icon-accent': '#3B82F6', '--glow-color': 'rgba(59, 130, 246, 0.25)' }}>
+                      <div className="min-card-header">
+                        <div className="min-icon-wrapper">
+                          <Icon icon="healthicons:ear-outline" />
+                        </div>
+                        <div className="min-title-group">
+                          <h3 className="min-organ-name">Ear</h3>
+                          <h4 className="min-meaning">Mendengarkan dengan Empati</h4>
+                        </div>
+                      </div>
                       <div className="min-desc">
                         <ul>
                           <li>Mendengarkan Aktif (Active Listening)</li>
@@ -996,9 +1600,16 @@ const App = () => {
 
                   <div className="journey-section minimal-item" data-part="mouth">
                     <div className="min-dot"></div>
-                    <div className="min-card-content">
-                      <h3 className="min-organ-name">Mouth</h3>
-                      <h4 className="min-meaning">Komunikasi</h4>
+                    <div className="min-card-content" style={{ '--icon-accent': '#EC4899', '--glow-color': 'rgba(236, 72, 153, 0.25)' }}>
+                      <div className="min-card-header">
+                        <div className="min-icon-wrapper">
+                          <Icon icon="healthicons:mouth-outline" />
+                        </div>
+                        <div className="min-title-group">
+                          <h3 className="min-organ-name">Mouth</h3>
+                          <h4 className="min-meaning">Komunikasi</h4>
+                        </div>
+                      </div>
                       <div className="min-desc">
                         <ul>
                           <li>Public Speaking</li>
@@ -1011,9 +1622,16 @@ const App = () => {
 
                   <div className="journey-section minimal-item" data-part="eyes">
                     <div className="min-dot"></div>
-                    <div className="min-card-content">
-                      <h3 className="min-organ-name">Eyes</h3>
-                      <h4 className="min-meaning">Visi</h4>
+                    <div className="min-card-content" style={{ '--icon-accent': '#8B5CF6', '--glow-color': 'rgba(139, 92, 246, 0.25)' }}>
+                      <div className="min-card-header">
+                        <div className="min-icon-wrapper">
+                          <Icon icon="ph:eye" />
+                        </div>
+                        <div className="min-title-group">
+                          <h3 className="min-organ-name">Eyes</h3>
+                          <h4 className="min-meaning">Visi</h4>
+                        </div>
+                      </div>
                       <div className="min-desc">
                         <ul>
                           <li>Penetapan Tujuan (Goals Setting)</li>
@@ -1026,9 +1644,31 @@ const App = () => {
 
                   <div className="journey-section minimal-item" data-part="neck">
                     <div className="min-dot"></div>
-                    <div className="min-card-content">
-                      <h3 className="min-organ-name">Neck</h3>
-                      <h4 className="min-meaning">Adaptabilitas</h4>
+                    <div className="min-card-content" style={{ '--icon-accent': '#F59E0B', '--glow-color': 'rgba(245, 158, 11, 0.25)' }}>
+                      <div className="min-card-header">
+                        <div className="min-icon-wrapper">
+                          <svg viewBox="0 0 100 100" fill="none" stroke="currentColor" strokeWidth="6" strokeLinecap="round" strokeLinejoin="round" style={{ width: '1em', height: '1em' }}>
+                            {/* Face/Jawline */}
+                            <path d="M 30, 25 C 30, 42 40, 49 50, 49 C 60, 49 70, 42 70, 25" />
+                            
+                            {/* Left Neck Contour */}
+                            <path d="M 38, 45 C 38, 58 38, 60 30, 63" />
+                            
+                            {/* Right Neck Contour */}
+                            <path d="M 62, 45 C 62, 58 62, 60 70, 63" />
+                            
+                            {/* Left Shoulder */}
+                            <path d="M 32, 61 C 26, 63 18, 64 12, 65" />
+                            
+                            {/* Right Shoulder */}
+                            <path d="M 68, 61 C 74, 63 82, 64 88, 65" />
+                          </svg>
+                        </div>
+                        <div className="min-title-group">
+                          <h3 className="min-organ-name">Neck</h3>
+                          <h4 className="min-meaning">Adaptabilitas</h4>
+                        </div>
+                      </div>
                       <div className="min-desc">
                         <ul>
                           <li>Fleksibilitas</li>
@@ -1047,9 +1687,16 @@ const App = () => {
 
                   <div className="journey-section minimal-item" data-part="shoulder">
                     <div className="min-dot"></div>
-                    <div className="min-card-content">
-                      <h3 className="min-organ-name">Shoulder</h3>
-                      <h4 className="min-meaning">Tanggung Jawab & Kepemimpinan</h4>
+                    <div className="min-card-content" style={{ '--icon-accent': '#6366F1', '--glow-color': 'rgba(99, 102, 241, 0.25)' }}>
+                      <div className="min-card-header">
+                        <div className="min-icon-wrapper">
+                          <Icon icon="ph:user" />
+                        </div>
+                        <div className="min-title-group">
+                          <h3 className="min-organ-name">Shoulder</h3>
+                          <h4 className="min-meaning">Tanggung Jawab & Kepemimpinan</h4>
+                        </div>
+                      </div>
                       <div className="min-desc">
                         <ul>
                           <li>Inisiatif Mandiri</li>
@@ -1062,9 +1709,16 @@ const App = () => {
 
                   <div className="journey-section minimal-item" data-part="heart">
                     <div className="min-dot"></div>
-                    <div className="min-card-content">
-                      <h3 className="min-organ-name">Heart</h3>
-                      <h4 className="min-meaning">Manajemen Emosi</h4>
+                    <div className="min-card-content" style={{ '--icon-accent': '#EF4444', '--glow-color': 'rgba(239, 68, 68, 0.25)' }}>
+                      <div className="min-card-header">
+                        <div className="min-icon-wrapper">
+                          <Icon icon="healthicons:heart-outline" />
+                        </div>
+                        <div className="min-title-group">
+                          <h3 className="min-organ-name">Heart</h3>
+                          <h4 className="min-meaning">Manajemen Emosi</h4>
+                        </div>
+                      </div>
                       <div className="min-desc">
                         <ul>
                           <li>Kecerdasan Emosional (EQ)</li>
@@ -1077,9 +1731,16 @@ const App = () => {
 
                   <div className="journey-section minimal-item" data-part="hand">
                     <div className="min-dot"></div>
-                    <div className="min-card-content">
-                      <h3 className="min-organ-name">Hand</h3>
-                      <h4 className="min-meaning">Pemecahan Masalah</h4>
+                    <div className="min-card-content" style={{ '--icon-accent': '#10B981', '--glow-color': 'rgba(16, 185, 129, 0.25)' }}>
+                      <div className="min-card-header">
+                        <div className="min-icon-wrapper">
+                          <Icon icon="ph:hand-palm" />
+                        </div>
+                        <div className="min-title-group">
+                          <h3 className="min-organ-name">Hand</h3>
+                          <h4 className="min-meaning">Pemecahan Masalah</h4>
+                        </div>
+                      </div>
                       <div className="min-desc">
                         <ul>
                           <li>Kreativitas</li>
@@ -1100,9 +1761,16 @@ const App = () => {
 
                   <div className="journey-section minimal-item" data-part="leg">
                     <div className="min-dot"></div>
-                    <div className="min-card-content">
-                      <h3 className="min-organ-name">Leg</h3>
-                      <h4 className="min-meaning">Tujuan Hidup</h4>
+                    <div className="min-card-content" style={{ '--icon-accent': '#06B6D4', '--glow-color': 'rgba(6, 182, 212, 0.25)' }}>
+                      <div className="min-card-header">
+                        <div className="min-icon-wrapper">
+                          <Icon icon="healthicons:leg-outline" />
+                        </div>
+                        <div className="min-title-group">
+                          <h3 className="min-organ-name">Leg</h3>
+                          <h4 className="min-meaning">Tujuan Hidup</h4>
+                        </div>
+                      </div>
                       <div className="min-desc">
                         <ul>
                           <li>Produktivitas & Manajemen Energi</li>
@@ -1132,7 +1800,7 @@ const App = () => {
                 { icon: 'solar:gamepad-old-bold-duotone', title: 'Gamification', desc: 'Integrasi sistem poin dan tantangan untuk membuat belajar terasa seperti petualangan.', color: '#EA6319' },
                 { icon: 'solar:dialog-2-bold-duotone', title: 'Interactive Lecturing', desc: 'Diskusi dua arah yang memicu daya pikir kritis dan penyelesaian masalah.', color: '#3B82F6' }
               ].map((item, i) => (
-                <div key={i} className="modern-service-card">
+                <div key={i} className="modern-service-card" style={{ '--card-theme-color': item.color }}>
                   <div className="modern-service-icon" style={{ '--icon-color': item.color, '--icon-bg': `${item.color}15` }}>
                     <Icon icon={item.icon} />
                   </div>
@@ -1181,7 +1849,7 @@ const App = () => {
                 </a>
               </div>
             </div>
-            <div className="contact-card-premium" style={{ background: '#F8FAFC', padding: '48px', borderRadius: '24px', border: '1px solid #E2E8F0', boxShadow: '0 20px 40px rgba(0,0,0,0.05)', color: 'var(--text-main)', position: 'relative' }}>
+            <div className="contact-card-premium" style={{ background: '#F8FAFC', padding: '48px', borderRadius: '24px', border: '1px solid #E2E8F0',  color: 'var(--text-main)', position: 'relative' }}>
 
               <h4 className="font-handwriting" style={{ fontSize: '2.2rem', color: '#EA6319', marginBottom: '32px' }}>Kontak Kami</h4>
               <div style={{ marginBottom: '32px' }}>
