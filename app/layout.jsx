@@ -1,4 +1,19 @@
 import './globals.css';
+import { Plus_Jakarta_Sans, Caveat } from 'next/font/google';
+
+const plusJakarta = Plus_Jakarta_Sans({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700', '800'],
+  variable: '--font-jakarta',
+  display: 'swap',
+});
+
+const caveat = Caveat({
+  subsets: ['latin'],
+  weight: ['400', '700'],
+  variable: '--font-caveat',
+  display: 'swap',
+});
 
 export const metadata = {
   title: 'PURE Education | Life Skills & Character Education Partner for Students, Teachers, and Parents',
@@ -8,6 +23,10 @@ export const metadata = {
   robots: 'index, follow',
   alternates: {
     canonical: 'https://pure-tco.com/',
+    languages: {
+      'id': 'https://pure-tco.com/',
+      'x-default': 'https://pure-tco.com/',
+    },
   },
   openGraph: {
     type: 'website',
@@ -110,11 +129,12 @@ const jsonLd = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="id">
+    <html lang="id" className={`${plusJakarta.variable} ${caveat.variable}`}>
       <head>
         <link rel="preconnect" href="https://api.iconify.design" crossOrigin="anonymous" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" crossOrigin="anonymous" />
         <meta name="msapplication-TileColor" content="#EA6319" />
+        <meta name="geo.region" content="ID-JK" />
+        <meta name="geo.placename" content="Jakarta" />
         <link rel="apple-touch-icon" href="/favicon.ico" />
         <script
           type="application/ld+json"

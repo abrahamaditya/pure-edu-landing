@@ -34,7 +34,9 @@ const DynamicWordCarousel = () => {
   );
 };
 
+
 const App = () => {
+
   useEffect(() => {
     // 1. Smooth Scroll (Lenis)
     const lenis = new Lenis({
@@ -593,7 +595,7 @@ const App = () => {
     <>
       {/* Navbar */}
       <nav className="navbar">
-        <a href="#home" className="logo">
+        <a href="#home" className="logo" aria-label="Kembali ke beranda PURE Education">
           <img src="/assets/logo/logo-pure-edu.png" alt="Pure Education Logo" className="logo-main" style={{ height: '55px' }} />
         </a>
         <ul className="nav-links">
@@ -626,7 +628,7 @@ const App = () => {
               </p>
 
               <div className="cta-row-compact">
-                <a href="#contact" className="btn btn-blue" aria-label="Mulai program PURE Education sekarang">Mulai Sekarang</a>
+                <a href="#contact" id="cta-mulai-sekarang" className="btn btn-blue" aria-label="Mulai program PURE Education sekarang">Mulai Sekarang</a>
                 <div className="social-divider"></div>
                 <div className="social-group-compact">
                   <a href="https://www.instagram.com/pureedu.tco/" target="_blank" rel="noopener noreferrer" className="hero-social-circle instagram-btn" aria-label="Kunjungi Instagram PURE Education">
@@ -644,7 +646,7 @@ const App = () => {
             <div className="compact-visual">
               <div className="image-stack-compact">
                 <div className="img-backdrop-compact"></div>
-                <img src="/assets/image/section_1.webp" alt="Siswa Berkolaborasi" className="hero-img-compact" />
+                <img src="/assets/image/section_1.webp" alt="Siswa belajar dan berkolaborasi dalam program PURE Education" className="hero-img-compact" width={600} height={400} />
 
                 {/* Re-introducing Floating "Flying" Elements with distinct animations */}
                 <div className="floating-card-compact card-top animate-float-1">
@@ -778,7 +780,7 @@ const App = () => {
                 zIndex: 1,
                 transform: 'rotate(8deg) scale(0.92)'
               }}>
-                <img src="/assets/image/section_2_2.webp" alt="Transformasi PURE" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                <img src="/assets/image/section_2_2.webp" alt="Peserta program PURE Education mengalami transformasi positif" loading="lazy" width={500} height={400} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
               </div>
 
               {/* Top Image (Front Card) */}
@@ -794,7 +796,7 @@ const App = () => {
                 zIndex: 2,
                 background: 'white'
               }}>
-                <img src="/assets/image/section_2_1.webp" alt="Tentang PURE Education" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                <img src="/assets/image/section_2_1.webp" alt="Tim fasilitator PURE Education dalam sesi pelatihan interaktif" loading="lazy" width={500} height={400} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
               </div>
             </div>
             <div>
@@ -804,9 +806,9 @@ const App = () => {
               </p>
 
               <div>
-                <h4 className="font-handwriting" style={{ fontSize: '1.8rem', marginBottom: '12px', textTransform: 'none', letterSpacing: 'normal', marginLeft: 0 }}>
+                <h3 className="font-handwriting" style={{ fontSize: '1.8rem', marginBottom: '12px', textTransform: 'none', letterSpacing: 'normal', marginLeft: 0 }}>
                   Prinsip yang kami percaya:
-                </h4>
+                </h3>
                 <div className="values-grid">
                   {[
                     { title: 'Psychological Approach', desc: 'Memahami potensi melalui pendekatan psikologi.', icon: 'solar:plain-2-bold-duotone', color: '#EA6319' },
@@ -819,7 +821,7 @@ const App = () => {
                         <Icon icon={v.icon} />
                       </div>
                       <div style={{ flex: 1 }}>
-                        <h5 style={{ fontSize: '0.9rem', fontWeight: 700, marginBottom: '2px', color: '#0F172A', lineHeight: 1.2 }}>{v.title}</h5>
+                        <h4 style={{ fontSize: '0.9rem', fontWeight: 700, marginBottom: '2px', color: '#0F172A', lineHeight: 1.2 }}>{v.title}</h4>
                         <p style={{
                           fontSize: '0.8rem',
                           color: '#64748B',
@@ -1196,7 +1198,7 @@ const App = () => {
                 { icon: 'fluent-emoji:school', title: 'School Partnership', desc: 'Berkolaborasi bersama sekolah dan pendidik untuk menciptakan pengalaman belajar yang suportif, bermakna, dan sesuai dengan kebutuhan perkembangan peserta didik.', img: '/assets/image/section_3_3.webp' }
               ].map((service, i) => (
                 <div key={i} className={`service-row ${i % 2 === 1 ? 'row-reverse' : ''}`}>
-                  <div className="service-row-image" style={{ backgroundImage: `url(${service.img})` }}></div>
+                  <div className="service-row-image" role="img" aria-label={`${service.title} — layanan PURE Education`} style={{ backgroundImage: `url(${service.img})` }}></div>
                   <div className="service-row-content">
                     <span className="row-number">0{i + 1}</span>
                     <h3 className="animate-writing">
@@ -1566,7 +1568,7 @@ const App = () => {
               { img: '/assets/image/section_7_1.webp' }
             ].map((item, i) => (
               <div key={i} className="gallery-card">
-                <img src={item.img} alt={`Momen transformasi peserta program PURE Education — Foto ${i + 1}`} />
+                <img src={item.img} alt={`Momen transformasi peserta program PURE Education — Foto ${i + 1}`} loading="lazy" width={400} height={300} />
               </div>
             ))}
           </div>
@@ -1579,7 +1581,7 @@ const App = () => {
               <h2>Siap untuk Memulai<span className="font-handwriting">Transformasi?</span></h2>
               <p className="contact-subtitle" style={{ fontSize: '1.4rem', color: 'var(--text-muted)', maxWidth: '600px' }}>Kami siap membantu Anda membangun life skills yang diperlukan untuk menghadapi tantangan masa depan.</p>
               <div className="desktop-wa-btn" style={{ display: 'flex', gap: '24px' }}>
-                <a href="https://wa.me/6287877198886" target="_blank" rel="noopener noreferrer" className="btn btn-blue btn-lg btn-whatsapp-shake">
+                <a href="https://wa.me/6287877198886" target="_blank" rel="noopener noreferrer" id="cta-whatsapp-desktop" aria-label="Hubungi PURE Education via WhatsApp" className="btn btn-blue btn-lg btn-whatsapp-shake">
                   <Icon icon="mdi:whatsapp" fontSize="1.5rem" />
                   Hubungi via WhatsApp
                 </a>
@@ -1603,7 +1605,7 @@ const App = () => {
             </div>
             
             <div className="mobile-wa-btn" style={{ display: 'none', gap: '24px', justifyContent: 'center' }}>
-              <a href="https://wa.me/6287877198886" target="_blank" rel="noopener noreferrer" className="btn btn-blue btn-lg btn-whatsapp-shake">
+              <a href="https://wa.me/6287877198886" target="_blank" rel="noopener noreferrer" id="cta-whatsapp-mobile" aria-label="Hubungi PURE Education via WhatsApp" className="btn btn-blue btn-lg btn-whatsapp-shake">
                 <Icon icon="mdi:whatsapp" fontSize="1.5rem" />
                 Hubungi via WhatsApp
               </a>
@@ -1614,15 +1616,15 @@ const App = () => {
         <footer className="footer-main">
           <div className="footer-grid">
             <div className="footer-brand">
-              <img src="/assets/logo/logo-pure-edu-white.png" alt="PURE Education — Partner Edukasi Life Skills" className="footer-logo" />
+              <img src="/assets/logo/logo-pure-edu-white.png" alt="PURE Education — Partner Edukasi Life Skills" className="footer-logo" loading="lazy" width={150} height={50} />
               <p className="footer-info">
                 Membangun life skills dan potensi holistik melalui pendekatan psikologi dan kreativitas untuk masa depan yang lebih baik.
               </p>
               <div className="footer-socials">
-                <a href="https://instagram.com/pure_edu" target="_blank" rel="noopener noreferrer" className="footer-social-link">
+                <a href="https://www.instagram.com/pureedu.tco/" target="_blank" rel="noopener noreferrer" className="footer-social-link" aria-label="Kunjungi Instagram PURE Education">
                   <Icon icon="mdi:instagram" />
                 </a>
-                <a href="https://linktr.ee/pure_edu" target="_blank" rel="noopener noreferrer" className="footer-social-link">
+                <a href="https://linktr.ee/pure_tco" target="_blank" rel="noopener noreferrer" className="footer-social-link" aria-label="Kunjungi Linktree PURE Education">
                   <Icon icon="simple-icons:linktree" />
                 </a>
               </div>
@@ -1632,7 +1634,7 @@ const App = () => {
                 <a href="#about" className="footer-link">
                   Tentang <Icon icon="ph:arrow-right-bold" className="footer-link-arrow" />
                 </a>
-                <a href="#classes" className="footer-link">
+                <a href="#services" className="footer-link">
                   Layanan <Icon icon="ph:arrow-right-bold" className="footer-link-arrow" />
                 </a>
                 <a href="#program" className="footer-link">

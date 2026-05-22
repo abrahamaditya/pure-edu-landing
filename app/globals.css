@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Caveat:wght@400;700&display=swap');
+/* Fonts loaded via next/font in layout.jsx for optimal performance */
 
 :root {
   --primary-dark: #0F172A;
@@ -15,7 +15,7 @@
   --shadow-soft: 0 20px 40px -15px rgba(0, 0, 0, 0.05);
   --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   --deco-opacity: 1;
-  --font-accent: 'Caveat', cursive;
+  --font-accent: var(--font-caveat, 'Caveat'), cursive;
 }
 
 
@@ -29,7 +29,7 @@
 
 
 body {
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: var(--font-jakarta, 'Plus Jakarta Sans'), sans-serif;
   background-color: #FFFFFF;
   color: var(--text-main);
   overflow-x: hidden;
@@ -285,7 +285,7 @@ html.lenis {
 }
 
 .stat-value {
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: var(--font-jakarta, 'Plus Jakarta Sans'), sans-serif;
   font-size: 2.2rem;
   font-weight: 800;
   color: white;
@@ -2839,6 +2839,14 @@ footer {
     transform: rotate(-2deg) translateY(3px) !important;
     margin-left: 6px !important;
   }
+  #pillars > div {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+  .pillar-card {
+    padding: 36px 28px !important;
+    border-radius: 24px !important;
+  }
   .pillar-tagline {
     font-size: 1.1rem !important;
     line-height: 1.5 !important;
@@ -2988,4 +2996,4 @@ footer {
   .footer-nav-group {
     margin-left: 0 !important;
   }
-}
+}
