@@ -646,7 +646,7 @@ const App = () => {
             <div className="compact-visual">
               <div className="image-stack-compact">
                 <div className="img-backdrop-compact"></div>
-                <img src="/assets/image/section_1.webp" alt="Siswa belajar dan berkolaborasi dalam program PURE Education" className="hero-img-compact" width={600} height={400} />
+                <img src="/assets/image/section_1.webp" alt="Siswa belajar dan berkolaborasi dalam program PURE Education" className="hero-img-compact" />
 
                 {/* Re-introducing Floating "Flying" Elements with distinct animations */}
                 <div className="floating-card-compact card-top animate-float-1">

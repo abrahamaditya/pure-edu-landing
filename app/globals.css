@@ -2642,7 +2642,7 @@ footer {
   }
   .hero-compact {
     padding-top: 60px !important;
-    padding-bottom: 90px !important;
+    padding-bottom: 40px !important;
   }
 
   /* Navbar */
@@ -2774,15 +2774,27 @@ footer {
   .image-stack-compact {
     height: 300px !important;
     width: 85% !important;
-    margin: 0 auto !important;
+    margin: 25px auto 0 !important;
   }
   .floating-card-compact {
     scale: 0.7 !important;
   }
+  .floating-card-compact.card-top {
+    left: -65px !important;
+    top: 10% !important;
+  }
+  .floating-card-compact.card-mid {
+    right: -55px !important;
+    top: 50% !important;
+  }
+  .floating-card-compact.card-bottom {
+    left: -45px !important;
+    bottom: 10% !important;
+  }
 
   /* Stats Section */
   .stats-section {
-    padding-top: 100px !important;
+    padding-top: 50px !important;
     padding-bottom: 160px !important;
   }
   .stats-container {
