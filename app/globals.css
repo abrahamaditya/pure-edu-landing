@@ -251,6 +251,9 @@ html.lenis {
   position: relative;
   mask-image: linear-gradient(to right, transparent, black 2%, black 98%, transparent);
   -webkit-mask-image: linear-gradient(to right, transparent, black 2%, black 98%, transparent);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
 /* Impact Stats Section */
@@ -313,7 +316,14 @@ html.lenis {
 .clients-track {
   display: flex;
   width: max-content;
-  animation: marquee-scroll 40s linear infinite;
+}
+
+.clients-track.track-right {
+  animation: marquee-scroll-right 30s linear infinite;
+}
+
+.clients-track.track-left {
+  animation: marquee-scroll-left 30s linear infinite;
 }
 
 .logos-group {
@@ -340,13 +350,21 @@ html.lenis {
   transform: scale(1.1);
 }
 
-@keyframes marquee-scroll {
+@keyframes marquee-scroll-right {
   0% {
     transform: translateX(-50%);
   }
-
   100% {
     transform: translateX(0);
+  }
+}
+
+@keyframes marquee-scroll-left {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
   }
 }
 
@@ -930,8 +948,34 @@ html.lenis {
   }
 
   .cta-row-compact {
-    flex-direction: column;
-    gap: 24px;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+  }
+  .cta-row-compact .social-divider {
+    display: none;
+  }
+  .cta-row-compact .social-group-compact {
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+    width: auto;
+  }
+  .cta-row-compact .social-expand-text {
+    display: none !important;
+  }
+  .cta-row-compact .instagram-btn,
+  .cta-row-compact .linktree-btn {
+    animation: none !important;
+    width: 44px !important;
+    height: 44px !important;
+    background: white !important;
+    border-color: #F1F5F9 !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05) !important;
+    padding: 0 !important;
+    justify-content: center !important;
+    border-radius: 50% !important;
   }
 
   .mini-metrics-compact {
@@ -2611,6 +2655,11 @@ footer {
     width: 84% !important;
     padding: 12px 20px !important;
   }
+  .navbar.hidden-mobile {
+    transform: translateY(-100px) !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
   .nav-links {
     display: none !important;
   }
@@ -2626,51 +2675,101 @@ footer {
   /* Hero Compact */
   .compact-container {
     flex-direction: column !important;
-    text-align: center !important;
+    text-align: left !important;
     gap: 40px !important;
     padding-top: 40px;
   }
   .title-compact {
-    font-size: 2.5rem !important;
+    font-size: 3.6rem !important;
+  }
+  .title-compact .font-handwriting {
+    font-size: 1.05em !important;
+    margin-left: 6px !important;
   }
   .desc-compact {
     font-size: 1rem !important;
-    margin: 0 auto 32px !important;
+    margin: 0 0 32px !important;
   }
   .cta-row-compact {
-    flex-direction: column !important;
-    gap: 20px !important;
+    display: flex !important;
+    width: 100% !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 12px !important;
+  }
+  .cta-row-compact .btn {
+    flex: 1 !important;
+    width: auto !important;
+    box-sizing: border-box !important;
+    margin: 0 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    height: 50px !important;
+    padding: 0 24px !important;
+    font-size: 0.95rem !important;
+    border-radius: 25px !important;
+    text-align: center !important;
   }
   .social-divider {
-    display: none !important;
+    display: block !important;
+    width: 1px !important;
+    height: 28px !important;
+    background: #E2E8F0 !important;
+    margin: 0 4px !important;
+    flex-shrink: 0 !important;
   }
   .social-group-compact {
-    flex-direction: column;
-    width: 100%;
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 12px !important;
+    width: auto !important;
+    flex-shrink: 0 !important;
   }
   .hero-social-circle {
-    width: 100% !important;
-    border-radius: 50px !important;
+    width: 56px !important;
+    height: 56px !important;
+    border-radius: 50% !important;
+    flex-shrink: 0 !important;
   }
   .social-expand-text {
-    opacity: 1 !important;
-    transform: none !important;
-    color: var(--primary-dark) !important;
-    padding-right: 0 !important;
+    display: none !important;
   }
   .instagram-btn, .linktree-btn {
     animation: none !important;
-    width: 100% !important;
+    width: 56px !important;
+    height: 56px !important;
+    box-sizing: border-box !important;
+    margin: 0 !important;
     background: white !important;
     border-color: #F1F5F9 !important;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05) !important;
-    padding: 12px !important;
+    flex-shrink: 0 !important;
+    padding: 0 !important;
+    justify-content: center !important;
+    align-items: center !important;
+    border-radius: 50% !important;
+  }
+  .instagram-btn .social-icon-wrapper {
+    animation: none !important;
+    color: #E4405F !important;
+    width: 100% !important;
+    height: 100% !important;
+    min-width: 100% !important;
+    display: flex !important;
+    align-items: center !important;
     justify-content: center !important;
   }
-  .instagram-btn .social-icon-wrapper,
   .linktree-btn .social-icon-wrapper {
     animation: none !important;
-    color: var(--brand-orange) !important;
+    color: #43E660 !important;
+    width: 100% !important;
+    height: 100% !important;
+    min-width: 100% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
   }
   .image-stack-compact {
     height: 300px !important;
@@ -2712,15 +2811,37 @@ footer {
     overflow: hidden !important;
     mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent) !important;
     -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent) !important;
+    gap: 10px !important;
+  }
+  .client-logo img {
+    height: 45px !important;
   }
   .clients-label {
     display: block !important;
+    text-align: center !important;
+    margin: 0 auto !important;
   }
   .clients-label span {
     font-size: 1.5rem !important;
+    padding-left: 0 !important;
   }
   .clients-label span:last-child {
     font-size: 2rem !important;
+    padding-left: 0 !important;
+  }
+
+  /* 3 Pillars */
+  #pillars h2 {
+    font-size: 2.2rem !important;
+  }
+  #pillars h2 .font-handwriting {
+    font-size: 1.2em !important;
+    transform: rotate(-2deg) translateY(3px) !important;
+    margin-left: 6px !important;
+  }
+  .pillar-tagline {
+    font-size: 1.1rem !important;
+    line-height: 1.5 !important;
   }
 
   /* About Us */

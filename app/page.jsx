@@ -57,12 +57,15 @@ const App = () => {
     ScrollTrigger.create({
       trigger: 'body',
       start: 'top -50',
-      onToggle: (self) => {
-        if (self.isActive) {
-          nav.classList.add('scrolled');
-        } else {
-          nav.classList.remove('scrolled');
-        }
+      onEnter: () => {
+        nav.classList.add('scrolled');
+        nav.classList.add('hidden-mobile');
+      },
+      onLeaveBack: () => {
+        nav.classList.remove('scrolled');
+        nav.classList.remove('hidden-mobile');
+        // Clear any GSAP inline styles to ensure the navbar is fully visible on mobile at the top
+        gsap.set('.navbar', { clearProps: 'all' });
       }
     });
 
@@ -93,75 +96,30 @@ const App = () => {
           }
         });
 
-        const glows = [
-          cardStudent.querySelector('.pillar-card-glow'),
-          cardTeacher.querySelector('.pillar-card-glow'),
-          cardParents.querySelector('.pillar-card-glow')
-        ];
-
         // Set initial dormant states
         gsap.set([taglineOrange, taglineBlue, taglineGreen], {
           color: 'rgba(255, 255, 255, 0.8)',
           textShadow: '0 0 0px rgba(0, 0, 0, 0)'
         });
         gsap.set([cardStudent, cardTeacher, cardParents], {
-          y: 0,
-          scale: 1
-        });
-        gsap.set(glows, {
-          opacity: 0
-        });
-        gsap.set([
-          cardStudent.querySelector('h3'),
-          cardTeacher.querySelector('h3'),
-          cardParents.querySelector('h3')
-        ], {
-          color: 'white'
-        });
-        gsap.set([
-          cardStudent.querySelector('.pillar-icon-box'),
-          cardTeacher.querySelector('.pillar-icon-box'),
-          cardParents.querySelector('.pillar-icon-box')
-        ], {
-          scale: 1,
-          rotate: 0,
-          
+          '--scroll-active': 0
         });
 
         taglineTl
           // ==============================
-          // 1. Student Active (phrase turns orange & card hovers)
+          // 1. Student Active (phrase turns orange)
           // ==============================
           .to(taglineOrange, {
-            color: '#FF5E00',
-            textShadow: '0 0 12px rgba(255, 94, 0, 0.85), 0 0 24px rgba(255, 94, 0, 0.45)',
+            color: '#FF8000',
+            textShadow: '0 0 12px rgba(255, 128, 0, 0.85), 0 0 24px rgba(255, 128, 0, 0.45)',
             duration: 0.6,
             ease: 'power1.inOut'
           })
           .to(cardStudent, {
-            y: -15,
-            scale: 1.05,
+            '--scroll-active': 1,
             duration: 0.6,
             ease: 'power1.inOut'
           }, '<')
-          .to(cardStudent.querySelector('h3'), {
-            color: '#FF5E00',
-            duration: 0.6,
-            ease: 'power1.inOut'
-          }, '<')
-          .to(cardStudent.querySelector('.pillar-card-glow'), {
-            opacity: 1,
-            duration: 0.6,
-            ease: 'power1.inOut'
-          }, '<')
-          .to(cardStudent.querySelector('.pillar-icon-box'), {
-            scale: 1.15,
-            rotate: 8,
-            
-            duration: 0.6,
-            ease: 'power1.inOut'
-          }, '<')
-          
           .to({}, { duration: 0.6 }) // hold active state
 
           // ==============================
@@ -174,64 +132,21 @@ const App = () => {
             ease: 'power1.inOut'
           })
           .to(cardStudent, {
-            y: 0,
-            scale: 1,
+            '--scroll-active': 0,
             duration: 0.6,
             ease: 'power1.inOut'
           }, '<')
-          .to(cardStudent.querySelector('h3'), {
-            color: 'white',
-            duration: 0.6,
-            ease: 'power1.inOut'
-          }, '<')
-          .to(cardStudent.querySelector('h3'), {
-            color: 'white',
-            duration: 0.6,
-            ease: 'power1.inOut'
-          }, '<')
-          .to(cardStudent.querySelector('.pillar-card-glow'), {
-            opacity: 0,
-            duration: 0.6,
-            ease: 'power1.inOut'
-          }, '<')
-          .to(cardStudent.querySelector('.pillar-icon-box'), {
-            scale: 1,
-            rotate: 0,
-            
-            duration: 0.6,
-            ease: 'power1.inOut'
-          }, '<')
-          
           .to(taglineBlue, {
-            color: '#00F0FF',
-            textShadow: '0 0 12px rgba(0, 240, 255, 0.85), 0 0 24px rgba(0, 240, 255, 0.45)',
+            color: '#00B3FF',
+            textShadow: '0 0 12px rgba(0, 179, 255, 0.85), 0 0 24px rgba(0, 179, 255, 0.45)',
             duration: 0.6,
             ease: 'power1.inOut'
           }, '<+=0.1')
           .to(cardTeacher, {
-            y: -15,
-            scale: 1.05,
+            '--scroll-active': 1,
             duration: 0.6,
             ease: 'power1.inOut'
           }, '<')
-          .to(cardTeacher.querySelector('h3'), {
-            color: '#00F0FF',
-            duration: 0.6,
-            ease: 'power1.inOut'
-          }, '<')
-          .to(cardTeacher.querySelector('.pillar-card-glow'), {
-            opacity: 1,
-            duration: 0.6,
-            ease: 'power1.inOut'
-          }, '<')
-          .to(cardTeacher.querySelector('.pillar-icon-box'), {
-            scale: 1.15,
-            rotate: 8,
-            
-            duration: 0.6,
-            ease: 'power1.inOut'
-          }, '<')
-
           .to({}, { duration: 0.6 }) // hold active state
 
           // ==============================
@@ -244,34 +159,10 @@ const App = () => {
             ease: 'power1.inOut'
           })
           .to(cardTeacher, {
-            y: 0,
-            scale: 1,
+            '--scroll-active': 0,
             duration: 0.6,
             ease: 'power1.inOut'
           }, '<')
-          .to(cardTeacher.querySelector('h3'), {
-            color: 'white',
-            duration: 0.6,
-            ease: 'power1.inOut'
-          }, '<')
-          .to(cardTeacher.querySelector('h3'), {
-            color: 'white',
-            duration: 0.6,
-            ease: 'power1.inOut'
-          }, '<')
-          .to(cardTeacher.querySelector('.pillar-card-glow'), {
-            opacity: 0,
-            duration: 0.6,
-            ease: 'power1.inOut'
-          }, '<')
-          .to(cardTeacher.querySelector('.pillar-icon-box'), {
-            scale: 1,
-            rotate: 0,
-            
-            duration: 0.6,
-            ease: 'power1.inOut'
-          }, '<')
-
           .to(taglineGreen, {
             color: '#00FF66',
             textShadow: '0 0 12px rgba(0, 255, 102, 0.85), 0 0 24px rgba(0, 255, 102, 0.45)',
@@ -279,29 +170,10 @@ const App = () => {
             ease: 'power1.inOut'
           }, '<+=0.1')
           .to(cardParents, {
-            y: -15,
-            scale: 1.05,
+            '--scroll-active': 1,
             duration: 0.6,
             ease: 'power1.inOut'
           }, '<')
-          .to(cardParents.querySelector('h3'), {
-            color: '#00FF66',
-            duration: 0.6,
-            ease: 'power1.inOut'
-          }, '<')
-          .to(cardParents.querySelector('.pillar-card-glow'), {
-            opacity: 1,
-            duration: 0.6,
-            ease: 'power1.inOut'
-          }, '<')
-          .to(cardParents.querySelector('.pillar-icon-box'), {
-            scale: 1.15,
-            rotate: 8,
-            
-            duration: 0.6,
-            ease: 'power1.inOut'
-          }, '<')
-
           .to({}, { duration: 0.6 }) // hold active state
 
           // ==============================
@@ -314,30 +186,7 @@ const App = () => {
             ease: 'power1.inOut'
           })
           .to(cardParents, {
-            y: 0,
-            scale: 1,
-            duration: 0.6,
-            ease: 'power1.inOut'
-          }, '<')
-          .to(cardParents.querySelector('h3'), {
-            color: 'white',
-            duration: 0.6,
-            ease: 'power1.inOut'
-          }, '<')
-          .to(cardParents.querySelector('h3'), {
-            color: 'white',
-            duration: 0.6,
-            ease: 'power1.inOut'
-          }, '<')
-          .to(cardParents.querySelector('.pillar-card-glow'), {
-            opacity: 0,
-            duration: 0.6,
-            ease: 'power1.inOut'
-          }, '<')
-          .to(cardParents.querySelector('.pillar-icon-box'), {
-            scale: 1,
-            rotate: 0,
-            
+            '--scroll-active': 0,
             duration: 0.6,
             ease: 'power1.inOut'
           }, '<');
@@ -355,216 +204,56 @@ const App = () => {
           }
         });
 
-        const glows = [
-          cardStudent.querySelector('.pillar-card-glow'),
-          cardTeacher.querySelector('.pillar-card-glow'),
-          cardParents.querySelector('.pillar-card-glow')
-        ];
-
         // Set initial dormant states
         gsap.set([taglineOrange, taglineBlue, taglineGreen], {
           color: 'rgba(255, 255, 255, 0.8)',
           textShadow: '0 0 0px rgba(0, 0, 0, 0)'
         });
         gsap.set([cardStudent, cardTeacher, cardParents], {
-          y: 0,
-          scale: 1
-        });
-        gsap.set(glows, {
-          opacity: 0
-        });
-        gsap.set([
-          cardStudent.querySelector('h3'),
-          cardTeacher.querySelector('h3'),
-          cardParents.querySelector('h3')
-        ], {
-          color: 'white'
-        });
-        gsap.set([
-          cardStudent.querySelector('.pillar-icon-box'),
-          cardTeacher.querySelector('.pillar-icon-box'),
-          cardParents.querySelector('.pillar-icon-box')
-        ], {
-          scale: 1,
-          rotate: 0,
-          
+          '--scroll-active': 0
         });
 
         taglineTl
           // 1. Student active
-          .to(taglineOrange, {
-            color: '#FF5E00',
-            textShadow: '0 0 12px rgba(255, 94, 0, 0.85), 0 0 24px rgba(255, 94, 0, 0.45)',
+          .to(cardStudent, {
+            '--scroll-active': 1,
             duration: 0.6,
             ease: 'power1.inOut'
           })
-          .to(cardStudent, {
-            y: -10,
-            scale: 1.03,
-            duration: 0.6,
-            ease: 'power1.inOut'
-          }, '<')
-          .to(cardStudent.querySelector('h3'), {
-            color: '#FF5E00',
-            duration: 0.6,
-            ease: 'power1.inOut'
-          }, '<')
-          .to(cardStudent.querySelector('.pillar-card-glow'), {
-            opacity: 1,
-            duration: 0.6,
-            ease: 'power1.inOut'
-          }, '<')
-          .to(cardStudent.querySelector('.pillar-icon-box'), {
-            scale: 1.15,
-            rotate: 8,
-            
-            duration: 0.6,
-            ease: 'power1.inOut'
-          }, '<')
-
           .to({}, { duration: 0.6 }) // hold active state
 
           // 2. Student Reverts & Teacher Active
-          .to(taglineOrange, {
-            color: 'rgba(255, 255, 255, 0.8)',
-            textShadow: '0 0 0px rgba(0, 0, 0, 0)',
+          .to(cardStudent, {
+            '--scroll-active': 0,
             duration: 0.6,
             ease: 'power1.inOut'
           })
-          .to(cardStudent, {
-            y: 0,
-            scale: 1,
-            duration: 0.6,
-            ease: 'power1.inOut'
-          }, '<')
-          .to(cardStudent.querySelector('.pillar-card-glow'), {
-            opacity: 0,
-            duration: 0.6,
-            ease: 'power1.inOut'
-          }, '<')
-          .to(cardStudent.querySelector('.pillar-icon-box'), {
-            scale: 1,
-            rotate: 0,
-            
-            duration: 0.6,
-            ease: 'power1.inOut'
-          }, '<')
-
-          .to(taglineBlue, {
-            color: '#00F0FF',
-            textShadow: '0 0 12px rgba(0, 240, 255, 0.85), 0 0 24px rgba(0, 240, 255, 0.45)',
+          .to(cardTeacher, {
+            '--scroll-active': 1,
             duration: 0.6,
             ease: 'power1.inOut'
           }, '<+=0.1')
-          .to(cardTeacher, {
-            y: -10,
-            scale: 1.03,
-            duration: 0.6,
-            ease: 'power1.inOut'
-          }, '<')
-          .to(cardTeacher.querySelector('h3'), {
-            color: '#00F0FF',
-            duration: 0.6,
-            ease: 'power1.inOut'
-          }, '<')
-          .to(cardTeacher.querySelector('.pillar-card-glow'), {
-            opacity: 1,
-            duration: 0.6,
-            ease: 'power1.inOut'
-          }, '<')
-          .to(cardTeacher.querySelector('.pillar-icon-box'), {
-            scale: 1.15,
-            rotate: 8,
-            
-            duration: 0.6,
-            ease: 'power1.inOut'
-          }, '<')
-
           .to({}, { duration: 0.6 }) // hold active state
 
           // 3. Teacher Reverts & Parents Active
-          .to(taglineBlue, {
-            color: 'rgba(255, 255, 255, 0.8)',
-            textShadow: '0 0 0px rgba(0, 0, 0, 0)',
+          .to(cardTeacher, {
+            '--scroll-active': 0,
             duration: 0.6,
             ease: 'power1.inOut'
           })
-          .to(cardTeacher, {
-            y: 0,
-            scale: 1,
-            duration: 0.6,
-            ease: 'power1.inOut'
-          }, '<')
-          .to(cardTeacher.querySelector('.pillar-card-glow'), {
-            opacity: 0,
-            duration: 0.6,
-            ease: 'power1.inOut'
-          }, '<')
-          .to(cardTeacher.querySelector('.pillar-icon-box'), {
-            scale: 1,
-            rotate: 0,
-            
-            duration: 0.6,
-            ease: 'power1.inOut'
-          }, '<')
-
-          .to(taglineGreen, {
-            color: '#00FF66',
-            textShadow: '0 0 12px rgba(0, 255, 102, 0.85), 0 0 24px rgba(0, 255, 102, 0.45)',
+          .to(cardParents, {
+            '--scroll-active': 1,
             duration: 0.6,
             ease: 'power1.inOut'
           }, '<+=0.1')
-          .to(cardParents, {
-            y: -10,
-            scale: 1.03,
-            duration: 0.6,
-            ease: 'power1.inOut'
-          }, '<')
-          .to(cardParents.querySelector('h3'), {
-            color: '#00FF66',
-            duration: 0.6,
-            ease: 'power1.inOut'
-          }, '<')
-          .to(cardParents.querySelector('.pillar-card-glow'), {
-            opacity: 1,
-            duration: 0.6,
-            ease: 'power1.inOut'
-          }, '<')
-          .to(cardParents.querySelector('.pillar-icon-box'), {
-            scale: 1.15,
-            rotate: 8,
-            
-            duration: 0.6,
-            ease: 'power1.inOut'
-          }, '<')
-
           .to({}, { duration: 0.6 }) // hold active state
 
           // Exit
-          .to(taglineGreen, {
-            color: 'rgba(255, 255, 255, 0.8)',
-            textShadow: '0 0 0px rgba(0, 0, 0, 0)',
-            duration: 0.6,
-            ease: 'power1.inOut'
-          })
           .to(cardParents, {
-            y: 0,
-            scale: 1,
+            '--scroll-active': 0,
             duration: 0.6,
             ease: 'power1.inOut'
-          }, '<')
-          .to(cardParents.querySelector('.pillar-card-glow'), {
-            opacity: 0,
-            duration: 0.6,
-            ease: 'power1.inOut'
-          }, '<')
-          .to(cardParents.querySelector('.pillar-icon-box'), {
-            scale: 1,
-            rotate: 0,
-            
-            duration: 0.6,
-            ease: 'power1.inOut'
-          }, '<');
+          });
       });
     }
 
@@ -594,7 +283,7 @@ const App = () => {
         scrollTrigger: {
           trigger: gallerySection,
           start: 'top top',
-          end: () => window.innerWidth <= 768 ? `+=${galleryCards.length * 50}%` : `+=${galleryCards.length * 150}%`,
+          end: () => window.innerWidth <= 768 ? `+=${galleryCards.length * 120}%` : `+=${galleryCards.length * 150}%`,
           pin: true,
           scrub: true,
           refreshPriority: -1,
@@ -604,12 +293,16 @@ const App = () => {
           onLeaveBack: () => {
             const isScrolled = window.scrollY > 50;
             if (isScrolled) nav.classList.add('scrolled');
-            gsap.to('.navbar', { y: 0, opacity: 1, duration: 0.2, overwrite: true });
+            if (window.innerWidth > 768) {
+              gsap.to('.navbar', { y: 0, opacity: 1, duration: 0.2, overwrite: true });
+            }
           },
           onLeave: () => {
             const isScrolled = window.scrollY > 50;
             if (isScrolled) nav.classList.add('scrolled');
-            gsap.to('.navbar', { y: 0, opacity: 1, duration: 0.2, overwrite: true });
+            if (window.innerWidth > 768) {
+              gsap.to('.navbar', { y: 0, opacity: 1, duration: 0.2, overwrite: true });
+            }
           },
           onEnterBack: () => {
             gsap.to('.navbar', { y: -100, opacity: 0, duration: 0.2, overwrite: true });
@@ -1016,31 +709,49 @@ const App = () => {
               <span style={{ color: 'var(--brand-orange)', fontSize: '3rem' }}>Berbagai Institusi:</span>
             </span>
             <div className="clients-marquee">
-              <div className="clients-track">
+              <div className="clients-track track-right">
                 <div className="logos-group">
                   {[
-                    'logo-tunas-muda.png', 'logo-penabur-international.png', 'logo-kinderfield.png',
-                    'logo-apple-tree.png', 'logo-itb.png', 'logo-global-prestasi.png',
-                    'logo-universal.png', 'logo-uph.png', 'logo-ichthus.png',
-                    'logo-springfield.png', 'logo-ricci.png', 'logo-john-paul.png',
-                    'logo-esa-unggu.png', 'logo-atma-jaya.png', 'logo-sdh.png',
-                    'logo-penabur.png', 'logo-lpt-ui.png'
+                    'logo-tunas-muda.png', 'logo-kinderfield.png', 'logo-itb.png',
+                    'logo-universal.png', 'logo-ichthus.png', 'logo-ricci.png',
+                    'logo-esa-unggu.png', 'logo-sdh.png', 'logo-lpt-ui.png'
                   ].map((logo, i) => (
-                    <div key={i} className="client-logo">
+                    <div key={`r1-${i}`} className="client-logo">
                       <img src={`/assets/logo/${logo}`} alt={logo.replace('logo-', '').replace('.png', '').split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ') + ' — Mitra PURE Education'} />
                     </div>
                   ))}
                 </div>
                 <div className="logos-group">
                   {[
-                    'logo-tunas-muda.png', 'logo-penabur-international.png', 'logo-kinderfield.png',
-                    'logo-apple-tree.png', 'logo-itb.png', 'logo-global-prestasi.png',
-                    'logo-universal.png', 'logo-uph.png', 'logo-ichthus.png',
-                    'logo-springfield.png', 'logo-ricci.png', 'logo-john-paul.png',
-                    'logo-esa-unggu.png', 'logo-atma-jaya.png', 'logo-sdh.png',
-                    'logo-penabur.png', 'logo-lpt-ui.png'
+                    'logo-tunas-muda.png', 'logo-kinderfield.png', 'logo-itb.png',
+                    'logo-universal.png', 'logo-ichthus.png', 'logo-ricci.png',
+                    'logo-esa-unggu.png', 'logo-sdh.png', 'logo-lpt-ui.png'
                   ].map((logo, i) => (
-                    <div key={`dup-${i}`} className="client-logo">
+                    <div key={`r1-dup-${i}`} className="client-logo">
+                      <img src={`/assets/logo/${logo}`} alt={logo.replace('logo-', '').replace('.png', '').split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ') + ' — Mitra PURE Education'} />
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div className="clients-track track-left">
+                <div className="logos-group">
+                  {[
+                    'logo-penabur-international.png', 'logo-apple-tree.png', 'logo-global-prestasi.png',
+                    'logo-uph.png', 'logo-springfield.png', 'logo-john-paul.png',
+                    'logo-atma-jaya.png', 'logo-penabur.png'
+                  ].map((logo, i) => (
+                    <div key={`r2-${i}`} className="client-logo">
+                      <img src={`/assets/logo/${logo}`} alt={logo.replace('logo-', '').replace('.png', '').split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ') + ' — Mitra PURE Education'} />
+                    </div>
+                  ))}
+                </div>
+                <div className="logos-group">
+                  {[
+                    'logo-penabur-international.png', 'logo-apple-tree.png', 'logo-global-prestasi.png',
+                    'logo-uph.png', 'logo-springfield.png', 'logo-john-paul.png',
+                    'logo-atma-jaya.png', 'logo-penabur.png'
+                  ].map((logo, i) => (
+                    <div key={`r2-dup-${i}`} className="client-logo">
                       <img src={`/assets/logo/${logo}`} alt={logo.replace('logo-', '').replace('.png', '').split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ') + ' — Mitra PURE Education'} />
                     </div>
                   ))}
@@ -1129,12 +840,37 @@ const App = () => {
           .pillar-card {
             position: relative;
             overflow: hidden;
-            background: rgba(15, 23, 42, 0.45) !important;
+            background: rgba(15, 23, 42, 0.68) !important;
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.4s, box-shadow 0.4s;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
             border-radius: 32px !important;
             will-change: transform;
+
+            /* Apply custom CSS variables for scroll active */
+            --scroll-active: 0;
+            --scroll-y: calc(var(--scroll-active) * -12px);
+            --scroll-scale: calc(1 + var(--scroll-active) * 0.02);
+            transform: translateY(var(--scroll-y)) scale(var(--scroll-scale)) !important;
           }
+          .pillar-card-student {
+            --accent-color: #FF8000;
+            --glow-color: rgba(255, 128, 0, 0.25);
+          }
+          .pillar-card-teacher {
+            --accent-color: #00B3FF;
+            --glow-color: rgba(0, 179, 255, 0.25);
+          }
+          .pillar-card-parents {
+            --accent-color: #00FF66;
+            --glow-color: rgba(0, 255, 102, 0.25);
+          }
+
+          /* Title text always white */
+          .pillar-card h3,
+          .pillar-card:hover h3 {
+            color: white !important;
+          }
+
           /* Default border static - tipis & elegan */
           .pillar-card::before {
             content: '';
@@ -1155,10 +891,10 @@ const App = () => {
             position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
             border-radius: 32px;
-            opacity: 0;
+            opacity: var(--scroll-active, 0) !important;
             pointer-events: none;
             z-index: 0;
-            transition: opacity 0.4s ease;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
             will-change: opacity;
             background: rgba(255, 255, 255, 0.02) !important;
             box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
@@ -1186,20 +922,14 @@ const App = () => {
             background: linear-gradient(135deg, #488765, rgba(72, 135, 101, 0));
           }
 
-          /* Hover manual untuk desktop static (hanya aktif saat tidak scroll) */
-          #pillars:not(.pillars-active) .pillar-card:hover {
+          /* Hover manual untuk desktop & mobile (selalu aktif) */
+          .pillar-card:hover {
             transform: translateY(-12px) scale(1.02) !important;
+            background: rgba(15, 23, 42, 0.80) !important;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4) !important;
           }
-          #pillars:not(.pillars-active) .pillar-card:hover .pillar-card-glow {
+          .pillar-card:hover .pillar-card-glow {
             opacity: 1 !important;
-          }
-
-          /* Nonaktifkan transisi CSS ketika GSAP sedang aktif */
-          #pillars.pillars-active .pillar-card,
-          #pillars.pillars-active .pillar-card::before,
-          #pillars.pillars-active .pillar-card-glow,
-          #pillars.pillars-active .pillar-icon-box {
-            transition: none !important;
           }
 
           .pillar-content-front {
@@ -1210,13 +940,19 @@ const App = () => {
             height: 100%;
           }
           .pillar-icon-box {
-            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
             will-change: transform;
+
+            /* Apply custom CSS variables for scroll active */
+            --scroll-icon-scale: calc(1 + var(--scroll-active, 0) * 0.15);
+            --scroll-icon-rotate: calc(var(--scroll-active, 0) * 8deg);
+            transform: scale(var(--scroll-icon-scale)) rotate(var(--scroll-icon-rotate)) !important;
           }
-          #pillars:not(.pillars-active) .pillar-card:hover .pillar-icon-box {
+          .pillar-card:hover .pillar-icon-box {
             transform: scale(1.15) rotate(8deg) !important;
             box-shadow: 0 20px 40px var(--glow-color) !important;
           }
+
           .pillar-tag {
             padding: 8px 16px;
             background: var(--tag-bg);
@@ -1237,10 +973,10 @@ const App = () => {
             transition: transform 0.3s ease, text-shadow 0.3s ease, color 0.3s ease;
           }
           .phrase-orange {
-            --reveal-color: #FF5E00;
+            --reveal-color: #FF8000;
           }
           .phrase-blue {
-            --reveal-color: #00F0FF;
+            --reveal-color: #00B3FF;
           }
           .phrase-green {
             --reveal-color: #00FF66;

@@ -1,7 +1,7 @@
 import './globals.css';
 
 export const metadata = {
-  title: 'PURE Education | Partner Edukasi Life Skills & Karakter untuk Siswa, Guru, dan Orang Tua',
+  title: 'PURE Education | Life Skills & Character Education Partner for Students, Teachers, and Parents',
   description: 'PURE Education — partner edukasi terpercaya sejak 2010. Program life skills, character building, dan pengembangan holistik untuk siswa, guru, dan orang tua melalui pendekatan psikologi inovatif.',
   keywords: 'PURE Education, life skills, character building, pelatihan guru, parenting class, pendidikan karakter, workshop guru, leadership camp, motivational day, edukasi anak, pengembangan karakter, Jakarta',
   authors: [{ name: 'PURE Education' }],
@@ -12,7 +12,7 @@ export const metadata = {
   openGraph: {
     type: 'website',
     url: 'https://pure-tco.com/',
-    title: 'PURE Education | Partner Edukasi Life Skills & Karakter',
+    title: 'PURE Education | Life Skills & Character Education Partner',
     description: 'Program life skills, character building, dan pengembangan holistik untuk siswa, guru, dan orang tua melalui pendekatan psikologi inovatif. 10.000+ siswa dilatih, 500+ guru diberdayakan.',
     images: [
       {
@@ -28,7 +28,7 @@ export const metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'PURE Education | Partner Edukasi Life Skills & Karakter',
+    title: 'PURE Education | Life Skills & Character Education Partner',
     description: 'Program life skills, character building, dan pengembangan holistik untuk siswa, guru, dan orang tua. 15+ tahun berdedikasi.',
     images: [{
       url: 'https://pure-tco.com/og-image.png',
