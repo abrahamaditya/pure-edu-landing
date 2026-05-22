@@ -1055,12 +1055,10 @@ const App = () => {
                         PURE Motion
                       </div>
                       <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '0.9rem', marginBottom: '16px', lineHeight: '1.4', fontWeight: 400 }}>
-                        Aktivitas fisik terstruktur untuk motorik & kebugaran.
+                        Program pengembangan life skills untuk membantu peserta berpikir, bertindak, dan bertumbuh secara bertahap.
                       </p>
                       <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px', '--tag-bg': 'rgba(234,99,25,0.1)', '--tag-bg-hover': 'rgba(234,99,25,0.2)', '--tag-border': 'rgba(234,99,25,0.2)', '--tag-color': '#FFB085' }}>
                         <span className="pillar-tag">Head to Toe Program</span>
-                        <span className="pillar-tag">Physical Dev</span>
-                        <span className="pillar-tag">Active Play</span>
                       </div>
                     </div>
 
