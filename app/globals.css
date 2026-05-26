@@ -664,13 +664,14 @@ html.lenis {
 .footer-main {
   background: linear-gradient(180deg, #0F172A 0%, #161e2e 100%);
   color: white;
-  padding: 80px 10% 40px;
+  padding: 80px calc(max(4%, calc(50% - 700px)) + 40px) 40px;
 }
 
 .footer-grid {
   display: grid;
   grid-template-columns: 1.5fr 1fr;
   gap: 60px;
+  width: 100%;
   margin-bottom: 60px;
 }
 
@@ -721,9 +722,10 @@ html.lenis {
 .footer-nav-group {
   display: flex;
   flex-direction: column;
+  align-items: flex-end;
   gap: 20px;
   padding-top: 15px;
-  margin-left: 80px;
+  margin-left: 0;
 }
 
 .footer-nav-title {
@@ -779,9 +781,25 @@ html.lenis {
 .footer-bottom {
   padding-top: 40px;
   border-top: 1px solid rgba(255, 255, 255, 0.5);
-  text-align: left;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  width: 100%;
   font-size: 0.8rem;
-  opacity: 0.4;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.footer-credit-link {
+  color: inherit;
+  font-weight: inherit;
+  text-decoration: none;
+  transition: var(--transition);
+  white-space: nowrap;
+}
+
+.footer-credit-link:hover {
+  color: white;
 }
 
 @media (max-width: 768px) {
@@ -2999,13 +3017,21 @@ footer {
   /* Footer */
   .footer-main {
     padding-top: 60px !important;
+    padding-left: calc(8% + 20px) !important;
+    padding-right: calc(8% + 20px) !important;
     padding-bottom: 40px !important;
   }
   .footer-grid {
     grid-template-columns: 1fr !important;
     gap: 40px !important;
   }
+  .footer-bottom {
+    align-items: flex-start !important;
+    flex-direction: column !important;
+    gap: 12px !important;
+  }
   .footer-nav-group {
     margin-left: 0 !important;
+    align-items: flex-start !important;
   }
 }

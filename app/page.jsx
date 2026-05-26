@@ -1649,6 +1649,9 @@ const App = () => {
           </div>
           <div className="footer-bottom">
             <p>&copy; 2026 PURE Education. Hak Cipta Dilindungi.</p>
+            <a href="https://pure-tco.com" target="_blank" rel="noopener noreferrer" className="footer-credit-link">
+              Powered by PURE Tco
+            </a>
           </div>
         </footer>
       </main>
