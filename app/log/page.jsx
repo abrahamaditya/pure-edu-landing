@@ -139,6 +139,8 @@ export default function PremiumLogDashboard() {
 
   const [activeTooltip, setActiveTooltip] = useState(null);
   const [logoutLoading, setLogoutLoading] = useState(false);
+  const [showPreloader, setShowPreloader] = useState(true);
+  const [fadeOutPreloader, setFadeOutPreloader] = useState(false);
   const router = useRouter();
 
   const handleLogout = async () => {
@@ -196,6 +198,13 @@ export default function PremiumLogDashboard() {
       setError(err.message || 'Terjadi kesalahan jaringan');
     } finally {
       setLoading(false);
+      // Smooth fade out of the fullscreen logo preloader
+      setTimeout(() => {
+        setFadeOutPreloader(true);
+        setTimeout(() => {
+          setShowPreloader(false);
+        }, 600);
+      }, 500);
     }
   };
 
@@ -473,7 +482,44 @@ export default function PremiumLogDashboard() {
 
   return (
     <div className="log-dashboard-wrapper">
+      {showPreloader && (
+        <div 
+          className={`preloader-overlay dark ${fadeOutPreloader ? 'fade-out' : ''}`}
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            width: '100vw',
+            height: '100vh',
+            backgroundColor: '#0b0f19',
+            zIndex: 99999,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            transition: 'opacity 0.6s ease',
+            opacity: fadeOutPreloader ? 0 : 1,
+            pointerEvents: fadeOutPreloader ? 'none' : 'auto',
+          }}
+        >
+          <div className="preloader-content" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '24px' }}>
+            <img 
+              src="/assets/logo/logo-pure-edu.png" 
+              alt="PURE Education" 
+              className="preloader-logo" 
+              style={{
+                width: '130px',
+                height: 'auto',
+                filter: 'drop-shadow(0 0 15px rgba(234, 99, 25, 0.25))',
+              }}
+            />
+          </div>
+        </div>
+      )}
       <style jsx global>{`
+        body {
+          background-color: #0b0f19 !important;
+        }
         .log-dashboard-wrapper {
           min-height: 100vh;
           background-color: #0B0F19;
@@ -487,6 +533,7 @@ export default function PremiumLogDashboard() {
           max-width: 1200px;
           margin: 0 auto;
           width: 100%;
+          animation: fade-in 0.6s ease-out forwards;
         }
 
         /* Top Header */
@@ -1549,6 +1596,15 @@ export default function PremiumLogDashboard() {
             padding: 10px 14px;
           }
         }
+
+        @keyframes fade-in {
+          from {
+            opacity: 0;
+          }
+          to {
+            opacity: 1;
+          }
+        }
       `}</style>
 
       <div className="dashboard-container">
@@ -1630,13 +1686,7 @@ export default function PremiumLogDashboard() {
           </div>
         )}
 
-        {/* Loading Overlay */}
-        {!error && loading && logs.length === 0 && (
-          <div className="state-wrapper">
-            <div className="spinner"></div>
-            <p style={{ color: '#94A3B8' }}>Mengambil data kunjungan terbaru dari basis data...</p>
-          </div>
-        )}
+
 
         {/* Dashboard Content */}
         {!error && (!loading || logs.length > 0) && (

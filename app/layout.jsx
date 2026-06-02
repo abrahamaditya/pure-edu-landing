@@ -1,6 +1,7 @@
 import './globals.css';
 import { Plus_Jakarta_Sans, Caveat } from 'next/font/google';
 import TrafficLogger from './components/TrafficLogger';
+import StyledJsxRegistry from './registry';
 
 const plusJakarta = Plus_Jakarta_Sans({
   subsets: ['latin'],
@@ -143,8 +144,10 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body>
-        <TrafficLogger />
-        {children}
+        <StyledJsxRegistry>
+          <TrafficLogger />
+          {children}
+        </StyledJsxRegistry>
       </body>
     </html>
   );

@@ -36,6 +36,85 @@ const DynamicWordCarousel = () => {
 
 
 const App = () => {
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [loadProgress, setLoadProgress] = useState(0);
+
+  useEffect(() => {
+    // Preload critical assets before showing the website
+    const criticalAssets = [
+      '/assets/logo/logo-pure-edu.png',
+      '/assets/image/section_1.webp'
+    ];
+
+    let loadedCount = 0;
+    const totalAssets = criticalAssets.length;
+
+    // Fallback timer to remove preloader if any resource takes too long
+    const failSafeTimeout = setTimeout(() => {
+      setLoadProgress(100);
+      setIsLoaded(true);
+    }, 4500);
+
+    const checkLoaded = () => {
+      loadedCount++;
+      const progress = Math.round((loadedCount / totalAssets) * 100);
+      setLoadProgress(progress);
+      
+      if (loadedCount === totalAssets) {
+        clearTimeout(failSafeTimeout);
+        setTimeout(() => {
+          setIsLoaded(true);
+        }, 500); // short delay for visual completion
+      }
+    };
+
+    criticalAssets.forEach(src => {
+      const img = new Image();
+      img.src = src;
+      img.onload = checkLoaded;
+      img.onerror = checkLoaded;
+    });
+
+    return () => clearTimeout(failSafeTimeout);
+  }, []);
+
+  useEffect(() => {
+    if (isLoaded) {
+      // 1. Smooth fade out the loader overlay
+      gsap.to('.preloader-overlay', {
+        opacity: 0,
+        pointerEvents: 'none',
+        duration: 0.8,
+        ease: 'power2.out'
+      });
+
+      // 2. Play entrance animation for navbar and hero elements
+      gsap.fromTo('.navbar', 
+        { y: -100, opacity: 0 }, 
+        { y: 0, opacity: 1, duration: 0.8, ease: 'power3.out', delay: 0.2 }
+      );
+
+      gsap.fromTo('.title-compact', 
+        { y: 45, opacity: 0 }, 
+        { y: 0, opacity: 1, duration: 1.1, ease: 'power4.out', delay: 0.4 }
+      );
+
+      gsap.fromTo('.desc-compact', 
+        { y: 35, opacity: 0 }, 
+        { y: 0, opacity: 1, duration: 1.1, ease: 'power4.out', delay: 0.55 }
+      );
+
+      gsap.fromTo('.cta-row-compact', 
+        { y: 30, opacity: 0 }, 
+        { y: 0, opacity: 1, duration: 1.1, ease: 'power4.out', delay: 0.7 }
+      );
+
+      gsap.fromTo('.compact-visual', 
+        { scale: 0.94, opacity: 0 }, 
+        { scale: 1, opacity: 1, duration: 1.3, ease: 'power3.out', delay: 0.5 }
+      );
+    }
+  }, [isLoaded]);
 
   useEffect(() => {
     // 1. Smooth Scroll (Lenis)
@@ -593,6 +672,13 @@ const App = () => {
 
   return (
     <>
+      {/* Premium Preloader Overlay */}
+      <div className="preloader-overlay">
+        <div className="preloader-content">
+          <img src="/assets/logo/logo-pure-edu.png" alt="PURE Education" className="preloader-logo" />
+        </div>
+      </div>
+
       {/* Navbar */}
       <nav className="navbar">
         <a href="#home" className="logo" aria-label="Kembali ke beranda PURE Education">

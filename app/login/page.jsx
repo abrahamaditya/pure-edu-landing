@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { KeyRound, User, Lock, AlertCircle, Loader2, Eye, EyeOff } from 'lucide-react';
 
@@ -10,7 +10,25 @@ export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [showPreloader, setShowPreloader] = useState(true);
+  const [fadeOutPreloader, setFadeOutPreloader] = useState(false);
   const router = useRouter();
+
+  useEffect(() => {
+    // Preload logo
+    const img = new Image();
+    img.src = '/assets/logo/logo-pure-edu.png';
+    const handleLoad = () => {
+      setTimeout(() => {
+        setFadeOutPreloader(true);
+        setTimeout(() => {
+          setShowPreloader(false);
+        }, 600);
+      }, 700);
+    };
+    img.onload = handleLoad;
+    img.onerror = handleLoad;
+  }, []);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -44,7 +62,44 @@ export default function LoginPage() {
 
   return (
     <div className="login-wrapper">
+      {showPreloader && (
+        <div 
+          className={`preloader-overlay dark ${fadeOutPreloader ? 'fade-out' : ''}`}
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            width: '100vw',
+            height: '100vh',
+            backgroundColor: '#0b0f19',
+            zIndex: 99999,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            transition: 'opacity 0.6s ease',
+            opacity: fadeOutPreloader ? 0 : 1,
+            pointerEvents: fadeOutPreloader ? 'none' : 'auto',
+          }}
+        >
+          <div className="preloader-content" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '24px' }}>
+            <img 
+              src="/assets/logo/logo-pure-edu.png" 
+              alt="PURE Education" 
+              className="preloader-logo" 
+              style={{
+                width: '130px',
+                height: 'auto',
+                filter: 'drop-shadow(0 0 15px rgba(234, 99, 25, 0.25))',
+              }}
+            />
+          </div>
+        </div>
+      )}
       <style jsx global>{`
+        body {
+          background-color: #0b0f19 !important;
+        }
         .login-wrapper {
           min-height: 100vh;
           background-color: #0b0f19;
@@ -93,6 +148,7 @@ export default function LoginPage() {
           box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
           z-index: 2;
           position: relative;
+          animation: fade-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
         .login-header {
@@ -253,6 +309,17 @@ export default function LoginPage() {
           0% { transform: rotate(0deg); }
           100% { transform: rotate(360deg); }
         }
+
+        @keyframes fade-up {
+          from {
+            opacity: 0;
+            transform: translateY(20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
       `}</style>
 
       <div className="login-card">
@@ -260,7 +327,7 @@ export default function LoginPage() {
           <div className="login-logo">
             <KeyRound size={24} />
           </div>
-          <h2>Akses Dasbor Analitik</h2>
+          <h2>Dashboard Log Analitik</h2>
           <p>Masukkan username dan password admin untuk melanjutkan.</p>
         </div>
 
