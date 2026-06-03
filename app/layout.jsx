@@ -138,6 +138,7 @@ export default function RootLayout({ children }) {
         <meta name="geo.region" content="ID-JK" />
         <meta name="geo.placename" content="Jakarta" />
         <link rel="apple-touch-icon" href="/favicon.ico" />
+        <link rel="icon" href="/favicon.ico" sizes="any" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
